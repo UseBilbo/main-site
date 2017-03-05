@@ -1,0 +1,15 @@
+Colors:
+
+Darkred - 6e323d
+Whitepink - f0eeed
+Darkgrey - 454545
+Lightbluesea - 7ed9e3
+Darkblue - 00114f
+Orange - eb955b
+DarkGreen - 007849
+
+
+Fonts:
+
+Modernistic(main titles) - Halvenica
+Regular text - Trocchi
