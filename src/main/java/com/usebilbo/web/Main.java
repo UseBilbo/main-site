@@ -12,6 +12,7 @@ public class Main extends AbstractVerticle {
     public static void main(String[] args) {
         //TODO: enable caching for prod
         System.setProperty("vertx.disableFileCaching", "true");
+
         System.setProperty("java.util.logging.config.file", "logging.properties");
 
         Runner.run(Main.class);
@@ -30,7 +31,7 @@ public class Main extends AbstractVerticle {
                 .setEnableFSTuning(false)
                 .setWebRoot("landing-page");
 
-        router.route().handler(staticHandler); // TODO: try to specify root
+        router.route().handler(staticHandler);
 
         vertx.createHttpServer().requestHandler(router::accept).listen(PORT);
 
