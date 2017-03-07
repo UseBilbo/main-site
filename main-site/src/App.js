@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { cyan500, cyan700, darkBlack, fullBlack, grey100, grey300, grey400, grey500, pinkA200, white } from 'material-ui/styles/colors'
 
+import Comments from './Comments'
 import Invitation from './Invitation'
 import LandingPageTop from './LandingPageTop'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import Notes from './Notes'
 import { fade } from 'material-ui/utils/colorManipulator'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
@@ -33,6 +35,8 @@ class App extends Component {
         <div>
           <LandingPageTop />
           <Invitation />
+          <Comments />
+          <Notes />
         </div>
       </MuiThemeProvider>
     )
