@@ -7,18 +7,31 @@ const leftDividerStyle = {
   borderTop: '3px solid #000',
   margin: '1em 0',
   padding: 0,
-  width: '50%',
+  width: '70%',
   align: 'left'
 }
+
+const leftDividerStyle2 = {
+  display: 'block',
+  border: 0,
+  borderTop: '3px solid #7F7FFF',
+  margin: '1em 0',
+  padding: 0,
+  width: '70%',
+  align: 'left'
+}
+
 
 const rightDividerStyle = {
   display: 'block',
   border: 0,
-  borderTop: '3px solid #000',
+  borderTop: '3px solid #009F00',
   margin: '1em 0',
   padding: 0,
-  width: '50%',
-  align: 'right'
+  width: '70%',
+  align: 'right',
+  textAlign: 'right',
+  float: 'right',
 }
 
 const containerStyle = {
@@ -27,23 +40,24 @@ const containerStyle = {
   width: '100%',
   fontSize: '24px',
   lineHeight: '1.5em',
-  position: 'relative',
 }
 
 const leftContainerStyle = {
   align: 'left',
-  verticalAlign: 'top',
-  border: '1px solid black',
+  textAlign: 'left',
+  verticalAlign: 'center',
+  width: '100%',
 }
 
 const rightContainerStyle = {
-  align: 'right',
-  verticalAlign: 'top',
-  border: '1px solid black',
+  textAlign: 'right',
+  verticalAlign: 'center',
+  width: '100%',
 }
 
 const titleStyle = {
-  fontSize: '28px'
+  fontSize: '28px',
+  verticalAlign:'center',
 }
 
 const cytingStyle = {
@@ -51,23 +65,50 @@ const cytingStyle = {
   color: 'white',
   backgroundColor: 'gray',
   align: 'left',
-  whiteSpace: 'nowrap',
   borderRadius: '15px',
+  verticalAlign: 'center',
+}
+const authorStyle = {
+  textAlign: 'right'
 }
 
-//TODO: move styles to CSS, finish page
+const pictureStyle = {
+  verticalAlign: 'bottom',
+}
+
+const iconStyle = {
+  verticalAlign: 'bottom',
+}
+
+const feedbackStyle = {
+  textAlign: 'left',
+  backgroundColor: 'cyan',
+  borderSpacing: '20px',
+}
+
+const feedbackNameStyle = {
+  textAlign: 'right',
+}
+
+const registerMessageStyle = {
+  textAlign: 'center',
+  fontSize: '36px',
+  align: 'center',
+  width: '100%',
+  margin: '20px',
+}
 
 const Comments = () => (
   <div style={containerStyle}>
     <hr style={leftDividerStyle} />
     <table style={leftContainerStyle}>
       <tr>
-        <td><img src='image/account-search.png' /></td>
+        <td><img src='image/account-search.png' alt="" style={iconStyle}/></td>
         <td style={titleStyle}>Odbądź podróż po świecie<br/>Twoich znajomych</td>
-        <td rowspan='2'>
+        <td rowSpan='2'>
           <div style={cytingStyle}>
-            "Czytanie książki jest, jak podróż<br/>po świecie drugiego człowieka. "<br/>
-            <div style={rightContainerStyle}>
+            "Czytanie książki jest, jak podróż po świecie drugiego człowieka. "<br/>
+            <div style={authorStyle}>
               Jonathan Carroll
             </div>
           </div>
@@ -76,8 +117,8 @@ const Comments = () => (
       <tr>
         <td></td>
         <td>
-          Widząc co czytają i jakie książki posiadają, <br />
-          jeszcze lepiej poznasz swoich znajomych <br />
+          Widząc co czytają i jakie książki posiadają,
+          jeszcze lepiej poznasz swoich znajomych
           i odkryjesz tytuły, które wiesz że chcesz przeczytać.
         </td>
       </tr>
@@ -86,22 +127,22 @@ const Comments = () => (
     <table style={rightContainerStyle}>
       <tr>
         <td style={titleStyle}>Wzmacniaj więzi ze znajomymi</td>
-        <td><img src='image/account-switch.png' alt=""/></td>
+        <td><img src='image/account-switch.png' alt="" style={iconStyle}/></td>
       </tr>
       <tr>
-        <td>Lubimy pomagać nawet nieznajomym, ponieważ zawsze wtedy czujemy <br />
-            uczucie wdzięczności, które ma do nas osoba której pomogliśmy.<br />
-            Pożyczając książki naszym przyjaciołom, pokazujemy że nam na nich<br />
+        <td>Lubimy pomagać nawet nieznajomym, ponieważ zawsze wtedy czujemy
+            uczucie wdzięczności, które ma do nas osoba której pomogliśmy.
+            Pożyczając książki naszym przyjaciołom, pokazujemy że nam na nich
             zależy, przez co i oni z radością będą chcieli pomóc i Tobie.</td>
         <td></td>
       </tr>
     </table>
-    <hr style={leftDividerStyle} />
+    <hr style={leftDividerStyle2} />
     <table style={leftContainerStyle}>
       <tr>
-        <td><img src='image/buffer.png' /></td>
+        <td><img src='image/buffer.png' alt="" style={iconStyle}/></td>
         <td style={titleStyle}>Odkryj na nowo, przeczytane przez Ciebie książki</td>
-        <td rowspan="2"><img src='image/photo-reading-guy.png' width="300px" alt=""/></td>
+        <td rowSpan="2" style={pictureStyle}><img src='image/photo-reading-guy.png' width="400px" height="300px" alt=""/></td>
       </tr>
       <tr>
         <td></td>
@@ -111,6 +152,34 @@ const Comments = () => (
             coś dzięki czemu nie tylko zawsze będziesz mieć pasjonujący wspólny
             temat ze znajomymi, ale także poznasz swoje książki zupełnie od nowa.
         </td>
+      </tr>
+    </table>
+    <div style={leftContainerStyle}>
+      <span><img src='image/account-multiple-plus.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Poznawaj nowe osoby</span></span>
+    </div>
+    <div style={leftContainerStyle}>
+      <span><img src='image/calendar-multiple-check.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Zawsze pamiętaj co komu pożyczyłeś/aś</span></span>
+    </div>
+    <table style={feedbackStyle}>
+      <tr>
+        <td>
+        "Jeśli tylko coś takiego wejdzie w życie będę zachwycona. Umożliwi to poszerzenie dostępności 
+        książek w krótkim czasie. Jestem zachwycona"
+        </td>
+        <td>
+        "Bardzo ciekawe pomysł i myślę, że dzięki tej usłudze sięgałabym po książki częściej 
+        niż dotychczas. Jest tyle książek, że nigdy nie wiem co jest ciekawe, co ktoś
+        może mi polecić, gdzie mogę to znaleźć"
+        </td>
+        <td>
+        "Mysle ze to fajny pomysl. Ja prawie nie pozyczam ksiazek od kogos i komus 
+        poniewaz nie znamy na wzajem swoich zbiorow. "
+        </td>
+      </tr>
+      <tr style={feedbackNameStyle}>
+        <td>Natalia</td>
+        <td>Aleksandra</td>
+        <td>Kinga</td>
       </tr>
     </table>
   </div>

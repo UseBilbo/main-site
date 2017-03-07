@@ -3,9 +3,10 @@ import { cyan500, cyan700, darkBlack, fullBlack, grey100, grey300, grey400, grey
 
 import Comments from './Comments'
 import Invitation from './Invitation'
+import LandingFooter from './LandingFooter'
 import LandingPageTop from './LandingPageTop'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Notes from './Notes'
+import RegisterForm from './RegisterForm'
 import { fade } from 'material-ui/utils/colorManipulator'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
@@ -36,7 +37,7 @@ class App extends Component {
           <LandingPageTop />
           <Invitation />
           <Comments />
-          <Notes />
+          <RegisterForm />
         </div>
       </MuiThemeProvider>
     )

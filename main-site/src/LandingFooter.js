@@ -1,8 +1,8 @@
 import Paper from 'material-ui/Paper';
 import React from 'react';
 
-const Notes = () => (
+const LandingFooter = () => (
   <Paper />
 );
 
-export default Notes;
+export default LandingFooter;
