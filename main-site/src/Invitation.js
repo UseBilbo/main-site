@@ -46,6 +46,7 @@ const hintStyle = {
   color: 'white',
   pointerEvents: 'none',
   fontSize: '24px',
+  fontWeight:'normal',
   zIndex: 1,
 }
 

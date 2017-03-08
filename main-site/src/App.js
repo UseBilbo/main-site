@@ -38,6 +38,7 @@ class App extends Component {
           <Invitation />
           <Comments />
           <RegisterForm />
+          <LandingFooter />
         </div>
       </MuiThemeProvider>
     )

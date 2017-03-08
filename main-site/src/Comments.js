@@ -1,4 +1,3 @@
-import Paper from 'material-ui/Paper';
 import React from 'react'
 
 const leftDividerStyle = {
@@ -90,18 +89,11 @@ const feedbackNameStyle = {
   textAlign: 'right',
 }
 
-const registerMessageStyle = {
-  textAlign: 'center',
-  fontSize: '36px',
-  align: 'center',
-  width: '100%',
-  margin: '20px',
-}
-
 const Comments = () => (
   <div style={containerStyle}>
     <hr style={leftDividerStyle} />
     <table style={leftContainerStyle}>
+      <tbody>
       <tr>
         <td><img src='image/account-search.png' alt="" style={iconStyle}/></td>
         <td style={titleStyle}>Odbądź podróż po świecie<br/>Twoich znajomych</td>
@@ -122,9 +114,11 @@ const Comments = () => (
           i odkryjesz tytuły, które wiesz że chcesz przeczytać.
         </td>
       </tr>
+      </tbody>
     </table>
     <hr style={rightDividerStyle} />
     <table style={rightContainerStyle}>
+      <tbody>
       <tr>
         <td style={titleStyle}>Wzmacniaj więzi ze znajomymi</td>
         <td><img src='image/account-switch.png' alt="" style={iconStyle}/></td>
@@ -136,9 +130,11 @@ const Comments = () => (
             zależy, przez co i oni z radością będą chcieli pomóc i Tobie.</td>
         <td></td>
       </tr>
+      </tbody>
     </table>
     <hr style={leftDividerStyle2} />
     <table style={leftContainerStyle}>
+      <tbody>
       <tr>
         <td><img src='image/buffer.png' alt="" style={iconStyle}/></td>
         <td style={titleStyle}>Odkryj na nowo, przeczytane przez Ciebie książki</td>
@@ -153,6 +149,7 @@ const Comments = () => (
             temat ze znajomymi, ale także poznasz swoje książki zupełnie od nowa.
         </td>
       </tr>
+      </tbody>
     </table>
     <div style={leftContainerStyle}>
       <span><img src='image/account-multiple-plus.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Poznawaj nowe osoby</span></span>
@@ -161,6 +158,7 @@ const Comments = () => (
       <span><img src='image/calendar-multiple-check.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Zawsze pamiętaj co komu pożyczyłeś/aś</span></span>
     </div>
     <table style={feedbackStyle}>
+      <tbody>
       <tr>
         <td>
         "Jeśli tylko coś takiego wejdzie w życie będę zachwycona. Umożliwi to poszerzenie dostępności 
@@ -181,6 +179,7 @@ const Comments = () => (
         <td>Aleksandra</td>
         <td>Kinga</td>
       </tr>
+      </tbody>
     </table>
   </div>
 )
