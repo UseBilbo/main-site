@@ -43,7 +43,7 @@ const RegisterForm = (props) => (
         <br />
       </div>
       <form style={formStyle}>
-        <TextField hintText="&nbsp;Zapisz się - podaj swój email" hintStyle={hintStyle} fullWidth={true}/> 
+        <TextField hintText="&nbsp;Zapisz się - podaj swój email" name="email" type="email" hintStyle={hintStyle} fullWidth={true}/> 
         <br />
         <button style={{
             zIndex: 1,

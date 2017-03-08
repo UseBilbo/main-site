@@ -75,7 +75,7 @@ const Invitation = () => (
     <div style={innerPaperStyle}>
       Prosty sposób na pożyczanie książek od i swoim znajomym
       <form style={formStyle}>
-        <TextField hintText="&nbsp;Zapisz się - podaj swój email" hintStyle={hintStyle} inputStyle={inputStyle} fullWidth={true}/> 
+        <TextField hintText="&nbsp;Zapisz się - podaj swój email" name="email" type="email" hintStyle={hintStyle} inputStyle={inputStyle} fullWidth={true}/> 
         &nbsp;&nbsp;
         <FlatButton icon={<img src="image/keyboard-right.png" width="56px" height="56px" alt="Send"/>} style={buttonStyle}/>
       </form>
