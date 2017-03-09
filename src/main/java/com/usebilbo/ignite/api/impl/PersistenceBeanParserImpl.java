@@ -12,13 +12,13 @@ import org.reflections.util.Utils;
 
 import com.usebilbo.annotation.ID;
 import com.usebilbo.annotation.Persistent;
+import com.usebilbo.bootstrap.property.PropertyContainer;
+import com.usebilbo.bootstrap.scanner.PackageScanner;
 import com.usebilbo.exception.CorePersistenceException;
 import com.usebilbo.ignite.api.PersistenceBeanParser;
 import com.usebilbo.ignite.api.PersistenceConfig;
 import com.usebilbo.util.ClassUtils;
 import com.usebilbo.util.Naming;
-import com.usebilbo.vertx.bootstrap.property.PropertyContainer;
-import com.usebilbo.vertx.bootstrap.scanner.PackageScanner;
 
 @Singleton
 public class PersistenceBeanParserImpl implements PersistenceBeanParser {

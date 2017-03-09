@@ -12,8 +12,8 @@ import javax.inject.Singleton;
 import org.apache.ignite.configuration.IgniteConfiguration;
 
 import com.google.inject.Inject;
+import com.usebilbo.bootstrap.LaunchContext;
 import com.usebilbo.ignite.configuration.IgniteConfigurator;
-import com.usebilbo.vertx.LaunchContext;
 
 @Singleton
 public class CompositeIgniteConfigurator implements IgniteConfigurator {

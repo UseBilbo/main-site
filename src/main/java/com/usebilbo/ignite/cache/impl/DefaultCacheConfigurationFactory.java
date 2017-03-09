@@ -11,9 +11,9 @@ import org.apache.ignite.cache.CacheWriteSynchronizationMode;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.igfs.IgfsGroupDataBlocksKeyMapper;
 
+import com.usebilbo.bootstrap.property.PropertyContainer;
 import com.usebilbo.ignite.cache.CacheConfigurationFactory;
 import com.usebilbo.ignite.cache.CacheStoreFactoryProvider;
-import com.usebilbo.vertx.bootstrap.property.PropertyContainer;
 
 @Singleton
 public class DefaultCacheConfigurationFactory implements CacheConfigurationFactory {

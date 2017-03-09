@@ -43,4 +43,8 @@ public class GuiceVerticleFactory implements VerticleFactory {
 
         return (Verticle) this.injector.getInstance(clazz);
     }
+
+    public Injector getInjector() {
+        return injector;
+    }
 }

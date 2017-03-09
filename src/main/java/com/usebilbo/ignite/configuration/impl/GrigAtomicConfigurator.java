@@ -9,8 +9,8 @@ import org.apache.ignite.configuration.AtomicConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
 
 import com.usebilbo.annotation.GridConfigurator;
+import com.usebilbo.bootstrap.property.PropertyContainer;
 import com.usebilbo.ignite.configuration.IgniteConfigurator;
-import com.usebilbo.vertx.bootstrap.property.PropertyContainer;
 
 @Singleton
 @GridConfigurator

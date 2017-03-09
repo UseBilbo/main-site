@@ -15,9 +15,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.h2.mvstore.MVStore;
 
+import com.usebilbo.bootstrap.property.PropertyContainer;
 import com.usebilbo.ignite.cache.CacheStoreFactoryProvider;
 import com.usebilbo.util.ListUtils;
-import com.usebilbo.vertx.bootstrap.property.PropertyContainer;
 
 @Singleton
 public class MVStoreCacheStoreFactoryProvider implements CacheStoreFactoryProvider {
