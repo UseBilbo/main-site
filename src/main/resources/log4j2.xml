@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" name="app-config">
+	<Properties>
+		<Property name="LOG_DIR">./logs</Property>
+		<Property name="ARCHIVE">${LOG_DIR}/archive</Property>
+		<Property name="PATTERN">[%level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+		<RollingFile name="fileWriter" fileName="${LOG_DIR}/application-node.log"
+			filePattern="${ARCHIVE}/app-%d{yyyy-MM-dd-hh}.log.gz">
+			<PatternLayout pattern="${PATTERN}" />
+			<TimeBasedTriggeringPolicy />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="STDOUT" />
+			<AppenderRef ref="fileWriter" />
+		</Root>
+		<Logger name="org.apache.logging" level="ERROR" additivity="false">
+			<AppenderRef ref="STDOUT" />
+		</Logger>
+	</Loggers>
+</Configuration>

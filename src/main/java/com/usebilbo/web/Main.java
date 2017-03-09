@@ -31,6 +31,7 @@ public class Main extends AbstractVerticle {
                 .setEnableFSTuning(false)
                 .setWebRoot("landing-page");
 
+        //router.route("/api/instantRegister/*").handler()
         router.route().handler(staticHandler);
 
         vertx.createHttpServer().requestHandler(router::accept).listen(PORT);
