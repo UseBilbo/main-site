@@ -29,11 +29,16 @@ const imgStyle = {
   verticalAlign: 'middle'
 }
 
+const heartStyle = {
+  fontSize: '24px',
+  color: 'red',
+}
+
 const LandingFooter = () => (
   <div style={mainStyle}>
-    <div style={leftStyle}>&nbsp;&nbsp;Made with <font color='red'>❤</font> in Krakow.</div>
+    <div style={leftStyle}>&nbsp;&nbsp;Made with <span style={heartStyle}>❤</span> in Krakow.</div>
     <div style={rightStyle}>Copyrights © 2017. usebilbo.com . All rights reserved.&nbsp;&nbsp;
-      <img style={imgStyle} src='image/fb-logo-blue-50.png' alt='FB Logo' />&nbsp;&nbsp;
+      <a href="https://www.facebook.com/groups/400811693627030/" target="_blank"><img style={imgStyle} src='image/fb-logo-blue-50.png' alt='FB Logo'/></a>&nbsp;&nbsp;
     </div>
   </div>
 )

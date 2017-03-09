@@ -16,7 +16,7 @@ const LandingPageTop = () => (
   iconElementLeft={<img src='image/bilbo-logo-dark.png' height="48px" alt="Bilbo Logo" />}
   title="Dołącz do grupy na facebooku >&nbsp;&nbsp;"
   titleStyle={titleStyle}
-  iconElementRight={<img src='image/fb-logo-blue-50.png' height="48px" alt="FB Logo" />}
+  iconElementRight={<a href="https://www.facebook.com/groups/400811693627030/" target="_blank"><img src='image/fb-logo-blue-50.png' height="48px" alt="FB Logo" /></a>}
   zDepth={0}
   />
 );
