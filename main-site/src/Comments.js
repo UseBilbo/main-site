@@ -154,9 +154,12 @@ const Comments = () => (
     <div style={leftContainerStyle}>
       <span><img src='image/account-multiple-plus.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Poznawaj nowe osoby</span></span>
     </div>
+    <br />
     <div style={leftContainerStyle}>
       <span><img src='image/calendar-multiple-check.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Zawsze pamiętaj co komu pożyczyłeś/aś</span></span>
     </div>
+    <br />
+    <br />
     <table style={feedbackStyle}>
       <tbody>
       <tr>
