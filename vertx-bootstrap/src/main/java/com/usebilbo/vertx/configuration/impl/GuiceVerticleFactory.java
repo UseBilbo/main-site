@@ -1,7 +1,7 @@
 package com.usebilbo.vertx.configuration.impl;
 import com.google.common.base.Preconditions;
 import com.google.inject.Injector;
-import com.usebilbo.vertx.GuiceVertxLauncher;
+import com.usebilbo.vertx.Launcher;
 
 import io.vertx.core.Verticle;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
@@ -10,7 +10,7 @@ import io.vertx.core.spi.VerticleFactory;
 /**
  * Represents verticle factory which uses Guice for verticle creation.
  * To make vertx to use this factory for verticle creation the following criteria should be accomplished:
- * 1) This factory should be registered in Vertx. One of the way to achieve this is to use {@link GuiceVertxLauncher}
+ * 1) This factory should be registered in Vertx. One of the way to achieve this is to use {@link Launcher}
  * as Vertx main launcher.
  * 2) Verticle should be deployed with the factory prefix {@link #PREFIX}.
  * <br>

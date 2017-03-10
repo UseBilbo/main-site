@@ -1,5 +1,6 @@
 package com.usebilbo.vertx.module.provider;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.reflections.Reflections;
@@ -11,7 +12,7 @@ import io.vertx.core.http.HttpServerOptions;
 
 @Singleton
 public class HttpOptionsProvider extends AbstractOptionsProvider<HttpServerOptions> {
-
+    @Inject
     public HttpOptionsProvider(Injector injector, Reflections reflections) {
         super(injector, reflections, HttpOptionConfiguration.class, "HTTP Server");
     }

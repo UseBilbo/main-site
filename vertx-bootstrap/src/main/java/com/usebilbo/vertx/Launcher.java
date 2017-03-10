@@ -25,37 +25,24 @@ import com.usebilbo.vertx.configuration.impl.VerticleManager;
 import com.usebilbo.vertx.module.VertxModule;
 
 import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Launcher;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 
-/**
- * Extends {@link Launcher} to use {@link GuiceVerticleFactory} verticle factory
- * which uses Guice for verticle creation.
- *
- * <p>
- * Note: Verticle should be deployed with the factory prefix
- * {@link GuiceVerticleFactory#PREFIX} to make vertx to use registered factory
- * for verticle creation and dependency injection.
- * </p>
- * <br>
- * Borrowed from {@link https://github.com/intappx/vertx-guice/} and heavily modified.
- */
-public class GuiceVertxLauncher {
+public class Launcher {
     private final Reflections reflections;
     private final CommandLine commandLine;
 
     /**
-     * Main entry point.
+     * Default main entry point.
      *
      * @param args
      *            the user command line arguments.
      */
     public static void main(String[] args) {
-        new GuiceVertxLauncher(new CommandLineImpl(args)).launch();
+        new Launcher(new CommandLineImpl(args)).launch();
     }
 
-    public GuiceVertxLauncher(CommandLine commandLine) {
+    public Launcher(CommandLine commandLine) {
         this.commandLine = commandLine;
         this.reflections = new Reflections(
                 new ConfigurationBuilder().forPackages(parentPackage(getClass().getPackage().getName()))

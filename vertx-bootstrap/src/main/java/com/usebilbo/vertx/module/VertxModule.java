@@ -1,5 +1,7 @@
 package com.usebilbo.vertx.module;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
 import com.usebilbo.vertx.annotation.AppModule;
@@ -19,6 +21,7 @@ public class VertxModule extends AbstractModule {
 
     private final Vertx vertx;
 
+    @Inject
     public VertxModule(Vertx vertx) {
         this.vertx = Preconditions.checkNotNull(vertx);
     }

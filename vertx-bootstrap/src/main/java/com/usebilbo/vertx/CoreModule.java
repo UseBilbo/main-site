@@ -5,6 +5,9 @@ import org.reflections.Reflections;
 import com.google.inject.AbstractModule;
 import com.usebilbo.vertx.configuration.CommandLine;
 
+/**
+ * Initial module used to build root injector.
+ */
 public class CoreModule extends AbstractModule {
     private final Reflections reflections;
     private final CommandLine commandLine;

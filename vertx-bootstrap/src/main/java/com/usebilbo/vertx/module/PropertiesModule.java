@@ -1,4 +1,4 @@
-package com.usebilbo.vertx.properties;
+package com.usebilbo.vertx.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +18,13 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.usebilbo.vertx.annotation.BootModule;
 import com.usebilbo.vertx.configuration.CommandLine;
+import com.usebilbo.vertx.properties.GroupBuilder;
+import com.usebilbo.vertx.properties.PropertyContainer;
 import com.usebilbo.vertx.properties.impl.PropertyContainerImpl;
 import com.usebilbo.vertx.properties.loader.PropertiesLoader;
 
 @BootModule
+@Singleton
 public class PropertiesModule extends AbstractModule {
     private static final Logger LOG = LogManager.getLogger();
 

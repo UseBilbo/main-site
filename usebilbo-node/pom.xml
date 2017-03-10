@@ -8,6 +8,10 @@
 	</parent>
 	<artifactId>usebilbo-node</artifactId>
 
+    <properties>
+        <exec.mainClass>com.usebilbo.vertx.Launcher</exec.mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.usebilbo</groupId>
