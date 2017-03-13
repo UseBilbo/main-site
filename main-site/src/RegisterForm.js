@@ -9,10 +9,12 @@ const registerMessageStyle = {
   lineHeight: '1.5em',
   align: 'center',
   padding: '50px',
+  color: '#6e323d'
 }
 
 const hintStyle = {
   fontSize: '24px',
+  color: '#7ed9e3',
 }
 
 const formStyle = {
@@ -23,17 +25,13 @@ const formStyle = {
   verticalAlignment:'middle',
 }
 
-const buttonStyle = {
-  margin: 30,
-  textAlign: 'center',
-  borderRadius: '10px',
-  height: '60px',
-  fontSize: '36px',
-}
-
 const labelStyle = {
   fontSize: '36px',
   margin: 30,
+}
+
+const underlineStyle = {
+  visibility: 'hidden',
 }
 
 const RegisterForm = (props) => (
@@ -43,11 +41,14 @@ const RegisterForm = (props) => (
         <br />
       </div>
       <form style={formStyle}>
-        <TextField hintText="&nbsp;Zapisz się - podaj swój email" name="email" type="email" hintStyle={hintStyle} fullWidth={true}/> 
+        <TextField hintText="&nbsp;Zapisz się - podaj swój email" name="email" type="email" 
+          hintStyle={hintStyle} fullWidth={true}
+          underlineStyle={underlineStyle}/>
+        <br />
         <br />
         <button style={{
             zIndex: 1,
-            backgroundColor: props.muiTheme.raisedButton.primary,
+            backgroundColor: '#7ed9e3',
             border: 'none',
             borderRadius: '10px',
             color: 'white',

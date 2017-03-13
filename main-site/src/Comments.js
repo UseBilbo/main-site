@@ -3,7 +3,7 @@ import React from 'react'
 const leftDividerStyle = {
   display: 'block',
   border: 0,
-  borderTop: '3px solid #000',
+  borderTop: '3px solid #6e323d',
   margin: '1em 0',
   padding: 0,
   width: '70%',
@@ -13,18 +13,17 @@ const leftDividerStyle = {
 const leftDividerStyle2 = {
   display: 'block',
   border: 0,
-  borderTop: '3px solid #7F7FFF',
+  borderTop: '3px solid #7ed9e3',
   margin: '1em 0',
   padding: 0,
   width: '70%',
   align: 'left'
 }
 
-
 const rightDividerStyle = {
   display: 'block',
   border: 0,
-  borderTop: '3px solid #009F00',
+  borderTop: '3px solid #eb955b',
   margin: '1em 0',
   padding: 0,
   width: '70%',
@@ -46,6 +45,7 @@ const leftContainerStyle = {
   textAlign: 'left',
   verticalAlign: 'center',
   width: '100%',
+  borderSpacing: '30px 10px',
 }
 
 const rightContainerStyle = {
@@ -62,7 +62,7 @@ const titleStyle = {
 const cytingStyle = {
   padding: '30px',
   color: 'white',
-  backgroundColor: 'gray',
+  backgroundColor: '#6e323d',
   align: 'left',
   borderRadius: '15px',
   verticalAlign: 'center',
@@ -81,8 +81,9 @@ const iconStyle = {
 
 const feedbackStyle = {
   textAlign: 'left',
-  backgroundColor: 'cyan',
-  borderSpacing: '20px',
+  backgroundColor: '#f0eeed',
+  color: '#00114f',
+  borderSpacing: '40px',
 }
 
 const feedbackNameStyle = {

@@ -1,4 +1,4 @@
-package com.usebilbo.vertx;
+package com.usebilbo.vertx.module;
 
 import org.reflections.Reflections;
 

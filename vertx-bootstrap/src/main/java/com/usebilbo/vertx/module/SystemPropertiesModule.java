@@ -13,6 +13,7 @@ import com.usebilbo.vertx.annotation.BootModule;
 import com.usebilbo.vertx.annotation.SystemProperties;
 import com.usebilbo.vertx.configuration.SystemPropertiesConfigurator;
 
+//TODO: reuse regular Configurator
 @BootModule
 @Singleton
 public class SystemPropertiesModule extends AbstractModule {

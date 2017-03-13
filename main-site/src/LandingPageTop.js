@@ -8,7 +8,8 @@ const appBarStyle = {
 const titleStyle = {
   textAlign: 'right',
   color: 'black',
-  fontSize: '24px',
+  fontSize: '20px',
+  fontWeight: '500',
 }
 
 const LandingPageTop = () => (

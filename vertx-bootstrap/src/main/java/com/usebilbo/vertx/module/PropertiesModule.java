@@ -3,6 +3,7 @@ package com.usebilbo.vertx.module;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -28,7 +29,8 @@ import com.usebilbo.vertx.properties.loader.PropertiesLoader;
 public class PropertiesModule extends AbstractModule {
     private static final Logger LOG = LogManager.getLogger();
 
-    private static final String CONFIG_EXTENSION = "helio.conf";
+    private static final String PATH_PREFIX = calculatePrefix();
+    private static final String CONFIG_EXTENSION = "boot.conf";
     
     private final CommandLine commandLine;
     private final GroupBuilder groupBuilder;
@@ -58,17 +60,28 @@ public class PropertiesModule extends AbstractModule {
 
     private List<String> prepareConfigName(List<String> configs) {
         List<String> result = new ArrayList<String>();
-        //TODO: replace constant with calculated at runtime value!
-        result.addAll(configs.stream()
-                      .filter((n) -> n.startsWith("com/usebilbo"))
-                      .sorted()
-                      .collect(Collectors.toList()));
-        result.addAll(configs.stream()
-                      .filter((n) -> !n.startsWith("com/usebilbo"))
-                      .sorted()
-                      .collect(Collectors.toList()));
+
+        result.addAll(filter(configs, with(PATH_PREFIX)));
+        result.addAll(filter(configs, without(PATH_PREFIX)));
         
         return result.stream().map(c -> PropertiesLoader.CLASSPATH_PREFIX + "/" + c).collect(Collectors.toList());
+    }
+
+    private static String calculatePrefix() {
+        String[] parts = PropertiesModule.class.getPackage().getName().split("\\.", 3);
+        return new StringBuilder(parts[0]).append('/').append(parts[1]).toString();
+    }
+
+    private static Predicate<? super String> without(String prefix) {
+        return (n) -> !n.startsWith(prefix);
+    }
+
+    private static Predicate<? super String> with(String prefix) {
+        return (n) -> n.startsWith(prefix);
+    }
+
+    private List<String> filter(List<String> configs, Predicate<? super String> predicate) {
+        return configs.stream().filter(predicate).sorted().collect(Collectors.toList());
     }
 
     private void bindMap(String k, Map<String, List<String>> v) {

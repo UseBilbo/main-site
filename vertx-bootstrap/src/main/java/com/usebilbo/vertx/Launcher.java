@@ -22,6 +22,7 @@ import com.usebilbo.vertx.configuration.CommandLine;
 import com.usebilbo.vertx.configuration.impl.CommandLineImpl;
 import com.usebilbo.vertx.configuration.impl.GuiceVerticleFactory;
 import com.usebilbo.vertx.configuration.impl.VerticleManager;
+import com.usebilbo.vertx.module.CoreModule;
 import com.usebilbo.vertx.module.VertxModule;
 
 import io.vertx.core.DeploymentOptions;
