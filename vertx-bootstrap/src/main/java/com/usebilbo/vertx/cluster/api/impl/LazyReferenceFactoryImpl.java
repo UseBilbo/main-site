@@ -1,8 +1,10 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteAtomicSequence;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteCompute;
@@ -16,17 +18,16 @@ import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.CollectionConfiguration;
 
 import com.usebilbo.vertx.cluster.api.ClusterFileSystem;
-import com.usebilbo.vertx.cluster.api.IgniteProvider;
 import com.usebilbo.vertx.cluster.api.LazyReference;
 import com.usebilbo.vertx.cluster.api.LazyReferenceFactory;
 import com.usebilbo.vertx.cluster.api.TransactionManager;
 
 @Singleton
 public class LazyReferenceFactoryImpl implements LazyReferenceFactory {
-    private final IgniteProvider provider;
+    private final Provider<Ignite> provider;
     
     @Inject
-    public LazyReferenceFactoryImpl(IgniteProvider provider) {
+    public LazyReferenceFactoryImpl(Provider<Ignite> provider) {
         this.provider = provider;
     }
 

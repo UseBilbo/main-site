@@ -42,10 +42,10 @@ import org.apache.ignite.IgniteAtomicLong;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteQueue;
 import org.apache.ignite.cluster.ClusterNode;
-import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.CollectionConfiguration;
 import org.apache.ignite.events.DiscoveryEvent;
 
+import com.usebilbo.vertx.annotation.ClusterManagerQueue;
 import com.usebilbo.vertx.cluster.manager.impl.AsyncMapImpl;
 import com.usebilbo.vertx.cluster.manager.impl.AsyncMultiMapImpl;
 import com.usebilbo.vertx.cluster.manager.impl.MapImpl;
@@ -79,19 +79,21 @@ public class IgniteClusterManager implements ClusterManager {
 
     private final Queue<String> pendingLocks = new ConcurrentLinkedQueue<>();
 
+    private final Object monitor = new Object();
+    private final Provider<Ignite> provider;
+    private final CollectionConfiguration collectionConfiguration;
+    
     private Vertx vertx;
 
     private NodeListener nodeListener;
 
     private volatile boolean active;
 
-    private final Object monitor = new Object();
-
-    private Provider<Ignite> provider;
 
     @Inject
-    public IgniteClusterManager(Provider<Ignite> provider) {
+    public IgniteClusterManager(Provider<Ignite> provider, @ClusterManagerQueue CollectionConfiguration collectionConfiguration) {
         this.provider = provider;
+        this.collectionConfiguration = collectionConfiguration;
     }
 
     @Override
@@ -271,7 +273,7 @@ public class IgniteClusterManager implements ClusterManager {
     }
 
     private <T> IgniteQueue<T> getQueue(String name, boolean create) {
-        return ignite().queue(name, 1, create ? collectionCfg : null);
+        return ignite().queue(name, 1, create ? collectionConfiguration : null);
     }
 
     private static String nodeId(ClusterNode node) {

@@ -24,6 +24,7 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
     private final long offHeapSize;
 
     @Inject
+    //TODO: rename properties
     public DefaultCacheConfigurationFactory(CacheStoreFactoryProvider storeProvider,
                                             @Named("grid.offheap.memory.per.cache") PropertyContainer offHeapSize,
                                             @Named("grid.transient.backups") PropertyContainer transientBackups,

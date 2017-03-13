@@ -91,12 +91,21 @@ public class PropertyContainerImpl implements PropertyContainer {
 
     @Override
     public long asSpace() {
-        return CvtUtils.abbreviatedToLong(asString());
+        return asSpace(0L);
+    }
+    @Override
+    public long asSpace(long defaultValue) {
+        return CvtUtils.abbreviatedToLong(asString()).orElse(defaultValue);
     }
 
     @Override
     public long asDuration() {
-        return CvtUtils.abbreviatedTimeToLong(asString());
+        return asDuration(0L);
+    }
+
+    @Override
+    public long asDuration(long defaultValue) {
+        return CvtUtils.abbreviatedTimeToLong(asString()).orElse(defaultValue);
     }
 
     @Override

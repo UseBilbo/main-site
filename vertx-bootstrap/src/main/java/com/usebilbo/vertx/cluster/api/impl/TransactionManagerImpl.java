@@ -1,23 +1,24 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import org.apache.ignite.Ignite;
 import org.apache.ignite.transactions.Transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.usebilbo.vertx.cluster.api.IgniteProvider;
 import com.usebilbo.vertx.cluster.api.TransactionManager;
 
 @Singleton
 public class TransactionManagerImpl implements TransactionManager {
     private static final Logger LOG = LogManager.getLogger();
     
-    private final IgniteProvider provider;
+    private final Provider<Ignite> provider;
 
     @Inject
-    public TransactionManagerImpl(IgniteProvider provider) {
+    public TransactionManagerImpl(Provider<Ignite> provider) {
         this.provider = provider;
     }
 

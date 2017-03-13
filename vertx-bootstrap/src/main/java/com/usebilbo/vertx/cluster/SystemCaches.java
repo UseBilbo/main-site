@@ -18,6 +18,7 @@ import com.usebilbo.vertx.cluster.api.ClusterFileSystem;
  */
 @Singleton
 @ClusterCacheConfigurations
+//TODO: rework it according to current requirements
 public class SystemCaches implements CacheConfigurations {
     public static final String NODE_GROUPS_CACHE = "node.groups";
     public static final String NODE_SERVICES_CACHE = "node.node-to-services";

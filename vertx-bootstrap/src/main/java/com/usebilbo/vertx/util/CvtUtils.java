@@ -6,6 +6,7 @@ import static com.usebilbo.vertx.util.Utils.isEmpty;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -42,7 +43,7 @@ public final class CvtUtils {
         }
     }
 
-    public static long abbreviatedToLong(String text) {
+    public static Optional<Long> abbreviatedToLong(String text) {
         String src = coalesce(text, "").toUpperCase();
         StringBuilder digits = new StringBuilder();
         long multiplier = 1;
@@ -67,15 +68,22 @@ public final class CvtUtils {
                 case 'T':
                     multiplier = 1024L * 1024 * 1024 * 1024;
                     break;
+                default:
+                    return Optional.empty();
             }
             break;
         }
 
-        return toLong(digits.toString(), 0) * multiplier;
+        return Optional.of(toLong(digits.toString(), 0) * multiplier);
     }
 
-    public static long abbreviatedTimeToLong(String text) {
+    public static Optional<Long> abbreviatedTimeToLong(String text) {
         String src = coalesce(text, "").toUpperCase();
+        
+        if (src.isEmpty()) {
+            return Optional.empty();
+        }
+        
         StringBuilder digits = new StringBuilder();
         long multiplier = 1;
         long sign = 1L;
@@ -105,11 +113,13 @@ public final class CvtUtils {
                 case 'D':
                     multiplier = TimeUnit.DAYS.toMillis(1);
                     break;
+                default: 
+                    return Optional.empty();
             }
             break;
         }
 
-        return sign * toLong(digits.toString(), 0) * multiplier;
+        return Optional.of(sign * toLong(digits.toString(), 0) * multiplier);
     }
 
     public static String toHex(int source) {

@@ -1,24 +1,32 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.apache.ignite.Ignite;
-
-import com.usebilbo.vertx.cluster.api.IgniteProvider;
+import org.apache.ignite.Ignition;
+import org.apache.ignite.configuration.IgniteConfiguration;
 
 @Singleton
-public class IgniteProviderImpl implements IgniteProvider {
-    private static final AtomicReference<Ignite> ignite = new AtomicReference<>();
-
-    @Override
-    public Ignite get() {
-        return ignite.get();
+public class IgniteProviderImpl implements Provider<Ignite> {
+    private final AtomicMarkableReference<Ignite> ignite = new AtomicMarkableReference<>(null, false);
+    private final IgniteConfiguration configuration;
+    
+    @Inject
+    public IgniteProviderImpl(IgniteConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
-    public void set(Ignite ignite) {
-        IgniteProviderImpl.ignite.set(ignite);
+    public Ignite get() {
+        if (ignite.isMarked()) {
+            return ignite.getReference();
+        }
+        
+        ignite.set(Ignition.start(configuration), true);
+        return ignite.getReference();
     }
 }

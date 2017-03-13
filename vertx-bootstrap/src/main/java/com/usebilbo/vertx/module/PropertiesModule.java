@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +24,7 @@ import com.usebilbo.vertx.properties.GroupBuilder;
 import com.usebilbo.vertx.properties.PropertyContainer;
 import com.usebilbo.vertx.properties.impl.PropertyContainerImpl;
 import com.usebilbo.vertx.properties.loader.PropertiesLoader;
+import com.usebilbo.vertx.util.ListUtils;
 
 @BootModule
 @Singleton
@@ -35,16 +37,28 @@ public class PropertiesModule extends AbstractModule {
     private final CommandLine commandLine;
     private final GroupBuilder groupBuilder;
     private final Reflections reflections;
+    private final Map<String, List<String>> props;
 
     @Inject
-    public PropertiesModule(CommandLine commandLine, GroupBuilder groupBuilder, Reflections reflections) {
+    public PropertiesModule(CommandLine commandLine, GroupBuilder groupBuilder, Reflections reflections, 
+            @Named("vertx.system.properties.*") Map<String, List<String>> props) {
         this.commandLine = commandLine;
         this.groupBuilder = groupBuilder;
         this.reflections = reflections;
+        this.props = props;
     }
 
     @Override
     protected void configure() {
+        configureApplicationProperties();
+        configureSystemProperties();
+    }
+
+    private void configureSystemProperties() {
+        props.forEach((key, value) -> System.setProperty(key,  ListUtils.last(value)));
+    }
+
+    private void configureApplicationProperties() {
         List<String> configs = reflections.getResources(Predicates.alwaysTrue()).stream().filter((name) -> name.endsWith(CONFIG_EXTENSION)).sorted().collect(Collectors.toList());
         
         LOG.info("Configuration files found in classpath: {}", configs);

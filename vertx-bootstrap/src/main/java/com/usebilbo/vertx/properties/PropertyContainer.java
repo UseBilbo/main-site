@@ -19,8 +19,10 @@ public interface PropertyContainer {
     long asLong(long defaultValue);
 
     long asSpace();
+    long asSpace(long defaultValue);
 
     long asDuration();
+    long asDuration(long defaultValue);
 
     boolean asBool();
     boolean asBool(boolean defaultValue);
