@@ -11,12 +11,12 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.configuration.IgniteConfiguration;
 
 @Singleton
-public class IgniteProviderImpl implements Provider<Ignite> {
+public class IgniteProvider implements Provider<Ignite> {
     private final AtomicMarkableReference<Ignite> ignite = new AtomicMarkableReference<>(null, false);
     private final IgniteConfiguration configuration;
     
     @Inject
-    public IgniteProviderImpl(IgniteConfiguration configuration) {
+    public IgniteProvider(IgniteConfiguration configuration) {
         this.configuration = configuration;
     }
 

@@ -6,10 +6,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
@@ -18,7 +14,6 @@ import com.google.common.base.Predicates;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
-import com.usebilbo.vertx.annotation.BootModule;
 import com.usebilbo.vertx.configuration.CommandLine;
 import com.usebilbo.vertx.properties.GroupBuilder;
 import com.usebilbo.vertx.properties.PropertyContainer;
@@ -26,40 +21,37 @@ import com.usebilbo.vertx.properties.impl.PropertyContainerImpl;
 import com.usebilbo.vertx.properties.loader.PropertiesLoader;
 import com.usebilbo.vertx.util.ListUtils;
 
-@BootModule
-@Singleton
 public class PropertiesModule extends AbstractModule {
     private static final Logger LOG = LogManager.getLogger();
 
     private static final String PATH_PREFIX = calculatePrefix();
     private static final String CONFIG_EXTENSION = "boot.conf";
+    private static final String SYSTEM_PROPERTIES = "vertx.system.properties.*";
     
     private final CommandLine commandLine;
     private final GroupBuilder groupBuilder;
     private final Reflections reflections;
-    private final Map<String, List<String>> props;
 
-    @Inject
-    public PropertiesModule(CommandLine commandLine, GroupBuilder groupBuilder, Reflections reflections, 
-            @Named("vertx.system.properties.*") Map<String, List<String>> props) {
+    public PropertiesModule(CommandLine commandLine, GroupBuilder groupBuilder, Reflections reflections) {
         this.commandLine = commandLine;
         this.groupBuilder = groupBuilder;
         this.reflections = reflections;
-        this.props = props;
     }
 
     @Override
     protected void configure() {
-        configureApplicationProperties();
-        configureSystemProperties();
+        configureSystemProperties(configureApplicationProperties().get(SYSTEM_PROPERTIES));
     }
 
-    private void configureSystemProperties() {
+    private void configureSystemProperties(Map<String, List<String>> props) {
+        if (props == null) {
+            return;
+        }
         props.forEach((key, value) -> System.setProperty(key,  ListUtils.last(value)));
     }
 
-    private void configureApplicationProperties() {
-        List<String> configs = reflections.getResources(Predicates.alwaysTrue()).stream().filter((name) -> name.endsWith(CONFIG_EXTENSION)).sorted().collect(Collectors.toList());
+    private Map<String, Map<String, List<String>>> configureApplicationProperties() {
+        List<String> configs = getConfigs();
         
         LOG.info("Configuration files found in classpath: {}", configs);
         
@@ -69,7 +61,16 @@ public class PropertiesModule extends AbstractModule {
         
         Map<String, List<String>> properties = PropertiesLoader.load(commandLine);
         properties.forEach((k, v) -> bindVar(k, v));
-        groupBuilder.buildGroups(properties).forEach((k, v) -> bindMap(k, v));
+        Map<String, Map<String, List<String>>> props = groupBuilder.buildGroups(properties);
+        props.forEach((k, v) -> bindMap(k, v));
+        return props;
+    }
+
+    private List<String> getConfigs() {
+        return reflections.getResources(Predicates.alwaysTrue()).stream()
+                .filter((name) -> name.endsWith(CONFIG_EXTENSION))
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private List<String> prepareConfigName(List<String> configs) {

@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface BootModule {
+public @interface SystemModule {
 }

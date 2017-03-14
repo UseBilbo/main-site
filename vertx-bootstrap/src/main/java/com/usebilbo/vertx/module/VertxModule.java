@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
-import com.usebilbo.vertx.annotation.AppModule;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
@@ -16,7 +15,6 @@ import io.vertx.core.shareddata.SharedData;
  * Borrowed from {@link https://github.com/intappx/vertx-guice/} with minor
  * modifications.
  */
-@AppModule
 public class VertxModule extends AbstractModule {
 
     private final Vertx vertx;

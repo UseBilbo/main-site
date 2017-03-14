@@ -16,14 +16,16 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.usebilbo.vertx.annotation.AppModule;
-import com.usebilbo.vertx.annotation.BootModule;
-import com.usebilbo.vertx.annotation.SysModule;
+import com.usebilbo.vertx.annotation.SystemModule;
 import com.usebilbo.vertx.configuration.CommandLine;
 import com.usebilbo.vertx.configuration.impl.CommandLineImpl;
 import com.usebilbo.vertx.configuration.impl.GuiceVerticleFactory;
 import com.usebilbo.vertx.configuration.impl.VerticleManager;
+import com.usebilbo.vertx.module.BootModule;
 import com.usebilbo.vertx.module.CoreModule;
+import com.usebilbo.vertx.module.PropertiesModule;
 import com.usebilbo.vertx.module.VertxModule;
+import com.usebilbo.vertx.properties.impl.GroupBuilderImpl;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -51,18 +53,23 @@ public class Launcher {
     }
     
     private void launch() {
-        Injector injector = Guice.createInjector(new CoreModule(reflections, commandLine));
-        
-        injector = injector.createChildInjector(collectModules(injector, BootModule.class));
-        
+        Injector injector = createRootInjector();
         Vertx vertx = Vertx.vertx(injector.getInstance(VertxOptions.class));
+        
         injector = injector.createChildInjector(new VertxModule(vertx));
-                
-        injector = injector.createChildInjector(collectModules(injector, SysModule.class));
+        
+        injector = injector.createChildInjector(collectModules(injector, SystemModule.class));
+        
         injector = injector.createChildInjector(collectModules(injector, AppModule.class));
         
         vertx.registerVerticleFactory(new GuiceVerticleFactory(injector));
         vertx.deployVerticle(getFullVerticleName(VerticleManager.class), new DeploymentOptions());
+    }
+
+    private Injector createRootInjector() {
+        return Guice.createInjector(new CoreModule(reflections, commandLine), 
+                new PropertiesModule(commandLine, new GroupBuilderImpl(), reflections),
+                new BootModule());
     }
 
     private List<Module> collectModules(Injector injector, Class<? extends Annotation> annotation) {
