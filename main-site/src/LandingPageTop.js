@@ -7,7 +7,7 @@ const appBarStyle = {
 
 const titleStyle = {
   textAlign: 'right',
-  color: 'black',
+  color: '#454545',
   fontSize: '20px',
   fontWeight: '500',
 }

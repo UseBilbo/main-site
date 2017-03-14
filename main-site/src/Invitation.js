@@ -13,18 +13,18 @@ const outerPaperStyle = {
 }
 
 const innerPaperStyle = {
-  width: '35%',
+  width: '48%',
   position: 'relative',
-  left: '45%',
+  left: '48%',
   top: '20%',
   fontWeight: 'bold',
-  fontSize: '60px',
+  fontSize: '50px',
   lineHeight: '1.5em',
 }
 
 const labelStyle = {
   width: 'auto',
-  left: '90%',
+  left: '85%',
   top: '10%',
   position: 'relative',
   backgroundColor: '#6e323d',
@@ -51,29 +51,14 @@ const hintStyle = {
   color: '#7ed9e3',
   pointerEvents: 'none',
   fontSize: '20px',
-  fontWeight:'500',
+  fontWeight:'600',
   zIndex: 1,
 }
 
 const inputStyle = {
   fontWeight: 'normal',
   color: '#7ed9e3',
-//  backgound: 'rgba(161,180, 182, 0.5)',
   fontSize: '24px',
-  borderWidth: '2px',
-  borderColor: '#7ed9e3',
-  borderStyle: 'solid',
-}
-
-const buttonStyle = {
-  color: '#7ed9e3',
-  borderColor: '#7ed9e3',
-  borderWidth: '2px',
-  borderStyle: 'solid',
-  aligh: 'center',
-  height: '52px',
-  padding: 0,
-  margin: 0,
 }
 
 const spacerStyle = {
@@ -84,8 +69,24 @@ const spacer2Style = {
   lineHeight: '45px',
 }
 
-const underlineStyle = {
-  visibility: 'hidden',
+const buttonStyle = {
+  color: '#7ed9e3',
+  borderColor: '#7ed9e3',
+  borderWidth: '2px',
+  borderStyle: 'solid',
+  aligh: 'center',
+  height: '100px',
+  padding: 0,
+  margin: 0,
+}
+
+const inputBackgroundStyle = {
+  border:'2px',
+  backgroundColor: 'rgba(255,255,255,0.1)',
+  padding: '0px 20px 0px 20px',
+  borderWidth: '2px',
+  borderColor: '#7ed9e3',
+  borderStyle: 'solid',
 }
 
 const Invitation = () => (
@@ -95,11 +96,14 @@ const Invitation = () => (
         Prosty sposób na pożyczanie książek od i swoim znajomym
         <div style={spacerStyle}>&nbsp;</div>
         <form style={formStyle}>
+          <div style={inputBackgroundStyle}>
           <TextField hintText="&nbsp;&nbsp;&nbsp;Zapisz się - podaj swój email" 
             name="email" type="email" hintStyle={hintStyle} inputStyle={inputStyle} fullWidth={true}
-            underlineStyle={underlineStyle}/> 
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <FlatButton icon={<img src="image/keyboard-right.png" width="56px" height="56px" alt="Send"/>} style={buttonStyle}/>
+            underlineShow={false}/> 
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <FlatButton icon={<img src="image/keyboard-right.png" alt="Send"/>} style={buttonStyle}/>
+          </div>
         </form>
         <div style={spacer2Style}>&nbsp;</div>
       </div>

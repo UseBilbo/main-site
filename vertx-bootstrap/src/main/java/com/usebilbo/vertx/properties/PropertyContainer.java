@@ -8,8 +8,9 @@ import com.usebilbo.vertx.properties.impl.PropertyContainerImpl;
 
 public interface PropertyContainer {
     List<String> list();
-    Set<String> split();
-    Set<String> split(String pattern);
+    List<String> split();
+    List<String> split(List<String> defaultValue);
+    List<String> split(String pattern);
 
     Set<String> set();
 

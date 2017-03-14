@@ -26,7 +26,7 @@ const rightDividerStyle = {
   borderTop: '3px solid #eb955b',
   margin: '1em 0',
   padding: 0,
-  width: '70%',
+  width: '75%',
   align: 'right',
   textAlign: 'right',
   float: 'right',
@@ -52,11 +52,18 @@ const rightContainerStyle = {
   textAlign: 'right',
   verticalAlign: 'center',
   width: '100%',
+  borderSpacing: '30px 10px',
 }
 
 const titleStyle = {
   fontSize: '28px',
   verticalAlign:'center',
+}
+
+const aloneTitleStyle = {
+  fontSize: '28px',
+  verticalAlign:'center',
+  whiteSpace: 'nowrap',
 }
 
 const cytingStyle = {
@@ -110,9 +117,11 @@ const Comments = () => (
       <tr>
         <td></td>
         <td>
+          <div style={{width:'75%'}}>
           Widząc co czytają i jakie książki posiadają,
           jeszcze lepiej poznasz swoich znajomych
           i odkryjesz tytuły, które wiesz że chcesz przeczytać.
+          </div>
         </td>
       </tr>
       </tbody>
@@ -125,10 +134,15 @@ const Comments = () => (
         <td><img src='image/account-switch.png' alt="" style={iconStyle}/></td>
       </tr>
       <tr>
-        <td>Lubimy pomagać nawet nieznajomym, ponieważ zawsze wtedy czujemy
+        <td>
+          <div style={{width:'75%', align: 'right', float:'right'}}>
+            Lubimy pomagać nawet nieznajomym, ponieważ zawsze wtedy czujemy
             uczucie wdzięczności, które ma do nas osoba której pomogliśmy.
             Pożyczając książki naszym przyjaciołom, pokazujemy że nam na nich
-            zależy, przez co i oni z radością będą chcieli pomóc i Tobie.</td>
+            zależy, przez co i oni z radością będą chcieli pomóc i Tobie.
+          </div>
+        </td>
+
         <td></td>
       </tr>
       </tbody>
@@ -139,49 +153,64 @@ const Comments = () => (
       <tr>
         <td><img src='image/buffer.png' alt="" style={iconStyle}/></td>
         <td style={titleStyle}>Odkryj na nowo, przeczytane przez Ciebie książki</td>
-        <td rowSpan="2" style={pictureStyle}><img src='image/photo-reading-guy.png' width="400px" height="300px" alt=""/></td>
       </tr>
       <tr>
         <td></td>
-        <td>Dzięki temu że Ty i twój znajomy przeczytaliście tę samą książkę
+        <td style={{verticalAlign:'top'}}>Dzięki temu że Ty i twój znajomy przeczytaliście tę samą książkę
             i o tym wiecie, na pewno będzie to okazja dla Was do rozmowy o niej.
             Ciekawe refleksje i zobaczenie książki z perspektywy innej osoby, to
             coś dzięki czemu nie tylko zawsze będziesz mieć pasjonujący wspólny
             temat ze znajomymi, ale także poznasz swoje książki zupełnie od nowa.
         </td>
+        <td style={{width:'30%'}}>&nbsp;</td>
       </tr>
       </tbody>
     </table>
-    <div style={leftContainerStyle}>
-      <span><img src='image/account-multiple-plus.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Poznawaj nowe osoby</span></span>
-    </div>
-    <br />
-    <div style={leftContainerStyle}>
-      <span><img src='image/calendar-multiple-check.png' alt="" style={iconStyle}/>&nbsp;<span style={titleStyle}>Zawsze pamiętaj co komu pożyczyłeś/aś</span></span>
-    </div>
+    <table style={leftContainerStyle}>
+      <tbody>
+      <tr>
+        <td><img src='image/account-multiple-plus.png' alt="" style={iconStyle}/></td>
+        <td style={aloneTitleStyle}>Poznawaj nowe osoby</td>
+        <td style={{width: '90%'}}>
+          &nbsp;
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <table style={leftContainerStyle}>
+      <tbody>
+      <tr>
+        <td><img src='image/calendar-multiple-check.png' alt="" style={iconStyle}/></td>
+        <td style={aloneTitleStyle}>Zawsze pamiętaj co komu pożyczyłeś/aś</td>
+        <td style={{width: '90%'}}>
+          &nbsp;
+        </td>
+      </tr>
+      </tbody>
+    </table>
     <br />
     <br />
     <table style={feedbackStyle}>
       <tbody>
       <tr>
-        <td>
+        <td style={{verticalAlign: 'top'}}>
         "Jeśli tylko coś takiego wejdzie w życie będę zachwycona. Umożliwi to poszerzenie dostępności 
         książek w krótkim czasie. Jestem zachwycona"
         </td>
-        <td>
+        <td style={{width: '30%', verticalAlign: 'top'}}>
         "Bardzo ciekawe pomysł i myślę, że dzięki tej usłudze sięgałabym po książki częściej 
         niż dotychczas. Jest tyle książek, że nigdy nie wiem co jest ciekawe, co ktoś
         może mi polecić, gdzie mogę to znaleźć"
         </td>
-        <td>
+        <td style={{verticalAlign: 'top'}}>
         "Mysle ze to fajny pomysl. Ja prawie nie pozyczam ksiazek od kogos i komus 
         poniewaz nie znamy na wzajem swoich zbiorow. "
         </td>
       </tr>
       <tr style={feedbackNameStyle}>
-        <td>Natalia</td>
-        <td>Aleksandra</td>
-        <td>Kinga</td>
+        <td>Natalia&nbsp;&nbsp;&nbsp;</td>
+        <td>Aleksandra&nbsp;</td>
+        <td>Kinga&nbsp;</td>
       </tr>
       </tbody>
     </table>

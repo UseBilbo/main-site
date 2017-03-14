@@ -8,13 +8,8 @@ const registerMessageStyle = {
   textAlign: 'center',
   lineHeight: '1.5em',
   align: 'center',
-  padding: '50px',
+  padding: '50px 150px 50px 150px',
   color: '#6e323d'
-}
-
-const hintStyle = {
-  fontSize: '24px',
-  color: '#7ed9e3',
 }
 
 const formStyle = {
@@ -30,8 +25,18 @@ const labelStyle = {
   margin: 30,
 }
 
-const underlineStyle = {
-  visibility: 'hidden',
+const hintStyle = {
+  fontSize: '28px',
+  color: '#7ed9e3',
+//  textAlign: 'center',
+//  position: 'relative',
+  zIndex: '-1',
+}
+
+const inputStyle = {
+  color: '#7ed9e3',
+  fontSize: '28px',
+//  textAlign: 'center',
 }
 
 const RegisterForm = (props) => (
@@ -41,9 +46,13 @@ const RegisterForm = (props) => (
         <br />
       </div>
       <form style={formStyle}>
-        <TextField hintText="&nbsp;Zapisz się - podaj swój email" name="email" type="email" 
-          hintStyle={hintStyle} fullWidth={true}
-          underlineStyle={underlineStyle}/>
+        <div style={{border:'2px', backgroundColor: 'rgba(126,217,227,0.1)', padding: '20px 50px 30px 50px'}}>
+          <br />
+          <TextField hintText="jestes.cudowna.osoba@gmail.com" name="email" type="email"
+            inputStyle={inputStyle}
+            hintStyle={hintStyle} fullWidth={true}
+            underlineShow={false}/>
+        </div>
         <br />
         <br />
         <button style={{
@@ -52,12 +61,13 @@ const RegisterForm = (props) => (
             border: 'none',
             borderRadius: '10px',
             color: 'white',
-            padding: '32px',
+            padding: '25px',
             textAlign: 'center',
             textDecoration: 'none',
             display: 'inline-block',
             transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-            fontSize: '36px',
+            fontSize: '24px',
+            fontWeight: '600',
           }}>Zapisuję się :)</button>
       </form>
       <br />

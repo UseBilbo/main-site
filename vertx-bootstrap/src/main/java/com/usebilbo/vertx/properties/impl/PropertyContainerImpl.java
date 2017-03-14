@@ -119,16 +119,25 @@ public class PropertyContainerImpl implements PropertyContainer {
     }
     
     @Override
-    public Set<String> split() {
+    public List<String> split() {
         return split(SPACE);
     }
 
     @Override
-    public Set<String> split(String pattern) {
+    public List<String> split(List<String> defaultValue) {
+        return isEmpty() ? defaultValue : split(SPACE);
+    }
+    
+    private boolean isEmpty() {
+        return values.isEmpty() || (values.size() == 1 && Utils.isEmpty(values.get(0)));
+    }
+
+    @Override
+    public List<String> split(String pattern) {
         return values.stream()
                 .flatMap((s) -> Utils.split(s, pattern).stream())
                 .map(s -> s.trim())
                 .filter(s -> !Utils.isEmpty(s))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }
