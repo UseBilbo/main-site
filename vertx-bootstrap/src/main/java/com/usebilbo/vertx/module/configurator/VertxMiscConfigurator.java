@@ -36,16 +36,16 @@ public class VertxMiscConfigurator implements Configurator<VertxOptions> {
             @Named("vertx.manager.config.warningExceptionTime") PropertyContainer warningExceptionTime, 
             @Named("vertx.manager.config.haEnabled") PropertyContainer haEnabled, 
             @Named("vertx.manager.config.haGroup") PropertyContainer haGroup) {
-        this.eventLoopPoolSize = eventLoopPoolSize.asInt(2 * Runtime.getRuntime().availableProcessors());
-        this.workerPoolSize = workerPoolSize.asInt(20);
-        this.internalBlockingPoolSize = internalBlockingPoolSize.asInt(20);
-        this.blockedThreadCheckInterval = blockedThreadCheckInterval.asDuration(1000L);
-        this.maxEventLoopExecuteTime = maxEventLoopExecuteTime.asDuration(2L * 1000 * 1000) * 1000L;
-        this.maxWorkerExecuteTime = maxWorkerExecuteTime.asDuration(60L * 1000 * 1000) * 1000L;
-        this.quorumSize = quorumSize.asInt(1);
-        this.warningExceptionTime = warningExceptionTime.asDuration(5L * 1000 * 1000) * 1000L;
-        this.haEnabled = haEnabled.asBool(false);
-        this.haGroup = haGroup.asString("__DEFAULT__");
+        this.eventLoopPoolSize = eventLoopPoolSize.asInt(VertxOptions.DEFAULT_EVENT_LOOP_POOL_SIZE);
+        this.workerPoolSize = workerPoolSize.asInt(VertxOptions.DEFAULT_WORKER_POOL_SIZE);
+        this.internalBlockingPoolSize = internalBlockingPoolSize.asInt(VertxOptions.DEFAULT_INTERNAL_BLOCKING_POOL_SIZE);
+        this.blockedThreadCheckInterval = blockedThreadCheckInterval.asDuration(VertxOptions.DEFAULT_BLOCKED_THREAD_CHECK_INTERVAL);
+        this.maxEventLoopExecuteTime = maxEventLoopExecuteTime.asDuration(VertxOptions.DEFAULT_MAX_EVENT_LOOP_EXECUTE_TIME) * 1000000L;
+        this.maxWorkerExecuteTime = maxWorkerExecuteTime.asDuration(VertxOptions.DEFAULT_MAX_WORKER_EXECUTE_TIME) * 1000000L;
+        this.quorumSize = quorumSize.asInt(VertxOptions.DEFAULT_QUORUM_SIZE);
+        this.warningExceptionTime = warningExceptionTime.asDuration(5L * 1000) * 1000000L;
+        this.haEnabled = haEnabled.asBool(VertxOptions.DEFAULT_HA_ENABLED);
+        this.haGroup = haGroup.asString(VertxOptions.DEFAULT_HA_GROUP);
     }
 
     @Override
