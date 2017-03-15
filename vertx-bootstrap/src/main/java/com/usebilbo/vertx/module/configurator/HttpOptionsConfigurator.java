@@ -1,21 +1,28 @@
 package com.usebilbo.vertx.module.configurator;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.usebilbo.vertx.annotation.HttpOptionConfiguration;
 import com.usebilbo.vertx.configuration.Configurator;
 import com.usebilbo.vertx.properties.PropertyContainer;
 
-import io.vertx.core.http.Http2Settings;
+import io.vertx.core.http.ClientAuth;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpVersion;
 
 @HttpOptionConfiguration
+//TODO: add missing properties from NetworkOptions and TCPSSLOptions 
 public class HttpOptionsConfigurator implements Configurator<HttpServerOptions> {
+    private static final Logger LOG = LogManager.getLogger();
+
     private final boolean compressionSupported;
     private final int compressionLevel;
     private final int maxWebsocketFrameSize;
@@ -25,11 +32,15 @@ public class HttpOptionsConfigurator implements Configurator<HttpServerOptions> 
     private final int maxChunkSize;
     private final int maxInitialLineLength;
     private final int maxHeaderSize;
-    private final Http2Settings initialSettings;
     private final List<HttpVersion> alpnVersions;
     private final int http2ConnectionWindowSize;
     private final boolean decompressionSupported;
     private final boolean acceptUnmaskedFrames;
+
+    private final int port;
+    private final int acceptBacklog;
+    private final String host;
+    private final ClientAuth clientAuth;
 
     @Inject
     public HttpOptionsConfigurator(
@@ -42,12 +53,15 @@ public class HttpOptionsConfigurator implements Configurator<HttpServerOptions> 
             @Named("vertx.http.server.maxChunkSize") PropertyContainer maxChunkSize,
             @Named("vertx.http.server.maxInitialLineLength") PropertyContainer maxInitialLineLength,
             @Named("vertx.http.server.maxHeaderSize") PropertyContainer maxHeaderSize,
-            @Named("vertx.http.server.initialSettings") PropertyContainer initialSettings,
             @Named("vertx.http.server.alpnVersions") PropertyContainer alpnVersions,
             @Named("vertx.http.server.http2ConnectionWindowSize") PropertyContainer http2ConnectionWindowSize,
             @Named("vertx.http.server.decompressionSupported") PropertyContainer decompressionSupported,
             @Named("vertx.http.server.acceptUnmaskedFrames") PropertyContainer acceptUnmaskedFrames,
-            Http2Settings http2settings) {
+
+            @Named("vertx.http.server.port") PropertyContainer port,
+            @Named("vertx.http.server.acceptBacklog") PropertyContainer acceptBacklog,
+            @Named("vertx.http.server.host") PropertyContainer host,
+            @Named("vertx.http.server.clientAuth") PropertyContainer clientAuth) {
 
         this.compressionSupported = compressionSupported.asBool(HttpServerOptions.DEFAULT_COMPRESSION_SUPPORTED);
         this.compressionLevel = compressionLevel.asInt(HttpServerOptions.DEFAULT_COMPRESSION_LEVEL);
@@ -64,20 +78,46 @@ public class HttpOptionsConfigurator implements Configurator<HttpServerOptions> 
         this.decompressionSupported = decompressionSupported.asBool(HttpServerOptions.DEFAULT_DECOMPRESSION_SUPPORTED);
         this.acceptUnmaskedFrames = acceptUnmaskedFrames.asBool(HttpServerOptions.DEFAULT_ACCEPT_UNMASKED_FRAMES);
         this.websocketSubProtocols = websocketSubProtocols.asString();
-        this.alpnVersions = toVersions(alpnVersions.split());
-        this.initialSettings = http2settings;
+        this.alpnVersions = toVersions(alpnVersions.split(","));
+
+        this.port = port.asInt(HttpServerOptions.DEFAULT_PORT);
+        this.acceptBacklog = acceptBacklog.asInt(HttpServerOptions.DEFAULT_ACCEPT_BACKLOG);
+        this.host = host.asString(HttpServerOptions.DEFAULT_HOST);
+        this.clientAuth = clientAuth.as(ClientAuth.class, ClientAuth.NONE);
     }
 
     private List<HttpVersion> toVersions(List<String> versions) {
-        // TODO Auto-generated method stub
-        //HttpServerOptions.DEFAULT_ALPN_VERSIONS
+        return versions.stream().map(s -> toEnum(s)).filter(v -> v != null).collect(Collectors.toList());
+    }
+
+    private HttpVersion toEnum(String s) {
+        try {
+            return Enum.valueOf(HttpVersion.class, s.toUpperCase(Locale.US));
+        } catch (IllegalArgumentException e) {
+            LOG.warn("Unable to parse value {} of type {}", s, HttpVersion.class.getSimpleName());
+        }
         return null;
     }
 
     @Override
     public void configure(HttpServerOptions options) {
-        // TODO Auto-generated method stub
-
+        options.setCompressionSupported(compressionSupported);
+        options.setCompressionLevel(compressionLevel);
+        options.setMaxWebsocketFrameSize(maxWebsocketFrameSize);
+        options.setMaxWebsocketMessageSize(maxWebsocketMessageSize);
+        options.setHandle100ContinueAutomatically(handle100ContinueAutomatically);
+        options.setMaxChunkSize(maxChunkSize);
+        options.setMaxInitialLineLength(maxInitialLineLength);
+        options.setMaxHeaderSize(maxHeaderSize);
+        options.setHttp2ConnectionWindowSize(http2ConnectionWindowSize);
+        options.setDecompressionSupported(decompressionSupported);
+        options.setAcceptUnmaskedFrames(acceptUnmaskedFrames);
+        options.setWebsocketSubProtocols(websocketSubProtocols);
+        options.setAlpnVersions(alpnVersions);
+        
+        options.setPort(port);
+        options.setAcceptBacklog(acceptBacklog);
+        options.setHost(host);
+        options.setClientAuth(clientAuth);
     }
-
 }

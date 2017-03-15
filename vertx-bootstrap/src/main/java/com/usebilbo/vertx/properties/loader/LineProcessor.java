@@ -59,6 +59,13 @@ public class LineProcessor {
     }
 
     protected static String substitute(String source, Properties props) {
+        if (source.equals("\"\"")) {
+            return "";
+        }
+        if (source.equalsIgnoreCase("\"null\"")) {
+            return "";
+        }
+        
         Matcher matcher = SUB_PATTERN.matcher(source);
 
         if (!matcher.find()) {

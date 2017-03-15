@@ -26,7 +26,12 @@ public final class CvtUtils {
             return defaultValue;
         }
         try {
-            return Integer.parseInt(text);
+            if (text.startsWith("0x") || text.startsWith("0X") || text.startsWith("#")) {
+                String src = (text.charAt(0) == '#') ? text.substring(1) : text.substring(2);
+                return Integer.parseInt(src, 16);
+            } else {
+                return Integer.parseInt(text);
+            }
         } catch (NumberFormatException e) {
             return defaultValue;
         }
@@ -37,7 +42,12 @@ public final class CvtUtils {
             return defaultValue;
         }
         try {
-            return Long.parseLong(text);
+            if (text.startsWith("0x") || text.startsWith("0X") || text.startsWith("#")) {
+                String src = (text.charAt(0) == '#') ? text.substring(1) : text.substring(2);
+                return Long.parseLong(src, 16);
+            } else {
+                return Long.parseLong(text);
+            }
         } catch (NumberFormatException e) {
             return defaultValue;
         }
@@ -105,7 +115,14 @@ public final class CvtUtils {
                     multiplier = TimeUnit.SECONDS.toMillis(1);
                     break;
                 case 'M':
-                    multiplier = TimeUnit.MINUTES.toMillis(1);
+                    
+                    if ((i + 1) < src.length() && src.charAt(i + 1) == 'S') {
+                        i++;
+                        multiplier = 1;
+                    } else {
+                        multiplier = TimeUnit.MINUTES.toMillis(1);
+                    }
+                    
                     break;
                 case 'H':
                     multiplier = TimeUnit.HOURS.toMillis(1);
