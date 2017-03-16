@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface RouterConfiguration {
+public @interface Order {
+    RoutingOrder value() default RoutingOrder.MIDDLE;
 }

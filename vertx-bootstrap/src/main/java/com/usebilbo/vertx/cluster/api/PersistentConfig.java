@@ -2,7 +2,7 @@ package com.usebilbo.vertx.cluster.api;
 
 import com.usebilbo.vertx.util.FieldAdapter;
 
-public interface PersistenceConfig {
+public interface PersistentConfig {
 
     String cacheName();
 

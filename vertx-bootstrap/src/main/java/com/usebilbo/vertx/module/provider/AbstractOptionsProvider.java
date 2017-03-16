@@ -34,7 +34,8 @@ public abstract class AbstractOptionsProvider<T> implements Provider<T> {
         T options = newOptions();
         
         reflections.getTypesAnnotatedWith(annotation).stream()
-                .filter(cls -> {LOG.info("Configuring {} with {}", name, cls.getSimpleName()); return true;})
+                .peek(cls -> LOG.info("Configuring {} with {}", name, cls.getSimpleName()))
+                .sorted(ProviderHelper.ORDER_COMPARATOR)
                 .map(cls -> (Configurator<T>) injector.getInstance(cls))
                 .forEach(configurator -> configurator.configure(options));
         

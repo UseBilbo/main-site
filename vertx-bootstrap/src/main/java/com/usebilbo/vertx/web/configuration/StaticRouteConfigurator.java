@@ -5,7 +5,9 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.base.Charsets;
+import com.usebilbo.vertx.annotation.Order;
 import com.usebilbo.vertx.annotation.RouterConfiguration;
+import com.usebilbo.vertx.annotation.RoutingOrder;
 import com.usebilbo.vertx.configuration.Configurator;
 import com.usebilbo.vertx.properties.PropertyContainer;
 import com.usebilbo.vertx.util.Utils;
@@ -14,6 +16,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
 
 @Singleton
+@Order(RoutingOrder.LAST)
 @RouterConfiguration
 public class StaticRouteConfigurator implements Configurator<Router> {
     private final boolean allowRootFileSystemAccess;

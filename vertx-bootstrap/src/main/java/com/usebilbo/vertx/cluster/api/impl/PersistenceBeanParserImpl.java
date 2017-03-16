@@ -12,19 +12,19 @@ import org.reflections.util.Utils;
 
 import com.usebilbo.vertx.annotation.ID;
 import com.usebilbo.vertx.annotation.Persistent;
-import com.usebilbo.vertx.cluster.api.PersistenceBeanParser;
-import com.usebilbo.vertx.cluster.api.PersistenceConfig;
+import com.usebilbo.vertx.cluster.api.BeanParser;
+import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.exception.CorePersistenceException;
 import com.usebilbo.vertx.properties.PropertyContainer;
 import com.usebilbo.vertx.util.ClassUtils;
 import com.usebilbo.vertx.util.Naming;
 
 @Singleton
-public class PersistenceBeanParserImpl implements PersistenceBeanParser {
+public class PersistenceBeanParserImpl implements BeanParser<PersistentConfig> {
     private final String schemaPrefix;
 
     @Inject
-    public PersistenceBeanParserImpl(@Named("persistence.schema.prefix") PropertyContainer schemaPrefix) {
+    public PersistenceBeanParserImpl(@Named("vertx.persistence.schema.prefix") PropertyContainer schemaPrefix) {
         this.schemaPrefix = preparePrefix(schemaPrefix.asString(""));
     }
 
@@ -33,7 +33,7 @@ public class PersistenceBeanParserImpl implements PersistenceBeanParser {
     }
 
     @Override
-    public PersistenceConfig parse(Class<?> bean) {
+    public PersistentConfig parse(Class<?> bean) {
         Persistent ann = bean.getAnnotation(Persistent.class);
         if (ann == null) {
             throw new CorePersistenceException("No Persistent annotation is present for " + bean.getSimpleName());

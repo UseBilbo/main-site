@@ -17,7 +17,6 @@ public class ClusterCacheConfigurator implements Configurator<IgniteConfiguratio
     private final List<CacheConfiguration<?, ?>> configs;
 
     @Inject
-    //TODO: bind configurations to provider
     public ClusterCacheConfigurator(List<CacheConfiguration<?, ?>> configs) {
         this.configs = configs;
     }

@@ -2,10 +2,10 @@ package com.usebilbo.vertx.cluster.api.impl;
 
 import java.lang.reflect.Field;
 
-import com.usebilbo.vertx.cluster.api.PersistenceConfig;
+import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.util.FieldAdapter;
 
-class PersistenceConfigImpl implements PersistenceConfig {
+class PersistenceConfigImpl implements PersistentConfig {
     private final String cacheName;
     private final boolean transactional;
     private final Class<?> valueType;

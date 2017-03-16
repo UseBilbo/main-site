@@ -13,6 +13,7 @@ import org.apache.ignite.igfs.IgfsGroupDataBlocksKeyMapper;
 
 import com.usebilbo.vertx.cluster.CacheConfigurationFactory;
 import com.usebilbo.vertx.cluster.CacheStoreFactoryProvider;
+import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.properties.PropertyContainer;
 
 @Singleton
@@ -24,7 +25,6 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
     private final long offHeapSize;
 
     @Inject
-    //TODO: rename properties
     public DefaultCacheConfigurationFactory(CacheStoreFactoryProvider storeProvider,
                                             @Named("vertx.cluster.offheap.memory.per.cache") PropertyContainer offHeapSize,
                                             @Named("vertx.cluster.transient.backups") PropertyContainer transientBackups,
@@ -72,6 +72,12 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
         return configuration;
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public <K, V> CacheConfiguration<K, V> persistentAtomicDistributedCache(PersistentConfig config) {
+        return (CacheConfiguration<K, V>) persistentAtomicDistributedCache(config.cacheName(), config.keyType(), config.valueType());
+    }
+    
     @Override
     public <K,V> CacheConfiguration<K, V> persistentTransactionalDistributedCache(String cacheName, Class<K> keyType, Class<V> valueType) {
         CacheConfiguration<K, V> cacheCfg = new CacheConfiguration<>();
@@ -93,5 +99,11 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
             cacheCfg.setIndexedTypes(keyType, valueType);
         }
         return cacheCfg;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <K, V> CacheConfiguration<K, V> persistentTransactionalDistributedCache(PersistentConfig config) {
+        return (CacheConfiguration<K, V>) persistentTransactionalDistributedCache(config.cacheName(), config.keyType(), config.valueType());
     }
 }
