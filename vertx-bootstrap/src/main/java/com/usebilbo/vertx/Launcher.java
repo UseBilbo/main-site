@@ -21,7 +21,7 @@ import com.usebilbo.vertx.configuration.CommandLine;
 import com.usebilbo.vertx.configuration.impl.CommandLineImpl;
 import com.usebilbo.vertx.configuration.impl.GuiceVerticleFactory;
 import com.usebilbo.vertx.configuration.impl.VerticleManager;
-import com.usebilbo.vertx.module.BootModule;
+import com.usebilbo.vertx.module.ClusterModule;
 import com.usebilbo.vertx.module.CoreModule;
 import com.usebilbo.vertx.module.PropertiesModule;
 import com.usebilbo.vertx.module.VertxModule;
@@ -69,7 +69,7 @@ public class Launcher {
     private Injector createRootInjector() {
         return Guice.createInjector(new CoreModule(reflections, commandLine), 
                 new PropertiesModule(commandLine, new GroupBuilderImpl(), reflections),
-                new BootModule());
+                new ClusterModule());
     }
 
     private List<Module> collectModules(Injector injector, Class<? extends Annotation> annotation) {

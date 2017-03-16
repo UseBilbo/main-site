@@ -72,13 +72,9 @@ import io.vertx.core.spi.cluster.NodeListener;
  */
 @Singleton
 public class IgniteClusterManager implements ClusterManager {
-
     private static final Logger log = LoggerFactory.getLogger(IgniteClusterManager.class);
 
-    public static final String VERTX_CACHE_TEMPLATE_NAME = "*";
-
     private final Queue<String> pendingLocks = new ConcurrentLinkedQueue<>();
-
     private final Object monitor = new Object();
     private final Provider<Ignite> provider;
     private final CollectionConfiguration collectionConfiguration;

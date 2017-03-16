@@ -1,4 +1,4 @@
-package com.usebilbo.vertx.mvstore;
+package com.usebilbo.vertx.cluster.configuration.mvstore;
 
 import javax.cache.configuration.Factory;
 

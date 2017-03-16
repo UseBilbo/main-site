@@ -1,4 +1,4 @@
-package com.usebilbo.vertx.cluster.impl;
+package com.usebilbo.vertx.cluster.configuration;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,10 +26,10 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
     @Inject
     //TODO: rename properties
     public DefaultCacheConfigurationFactory(CacheStoreFactoryProvider storeProvider,
-                                            @Named("grid.offheap.memory.per.cache") PropertyContainer offHeapSize,
-                                            @Named("grid.transient.backups") PropertyContainer transientBackups,
-                                            @Named("grid.persistent.backups") PropertyContainer persistentBackups,
-                                            @Named("grid.igfs.group.size") PropertyContainer igfsGroupSize) {
+                                            @Named("vertx.cluster.offheap.memory.per.cache") PropertyContainer offHeapSize,
+                                            @Named("vertx.cluster.transient.backups") PropertyContainer transientBackups,
+                                            @Named("vertx.cluster.persistent.backups") PropertyContainer persistentBackups,
+                                            @Named("vertx.cluster.igfs.group.size") PropertyContainer igfsGroupSize) {
         this.storeProvider = storeProvider;
         this.igfsGroupSize = igfsGroupSize.asInt(256);
         this.persistentBackups = persistentBackups.asInt();

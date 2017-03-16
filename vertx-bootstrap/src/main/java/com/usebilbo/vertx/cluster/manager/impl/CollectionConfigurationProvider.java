@@ -13,7 +13,7 @@ import org.apache.ignite.configuration.CollectionConfiguration;
 import com.usebilbo.vertx.properties.PropertyContainer;
 
 @Singleton
-public class DefaultCollectionConfigurationProvider implements Provider<CollectionConfiguration> {
+public class CollectionConfigurationProvider implements Provider<CollectionConfiguration> {
     private final CacheAtomicityMode atomicityMode;
     private final CacheMode cacheMode;
     private final CacheMemoryMode memoryMode;
@@ -23,7 +23,7 @@ public class DefaultCollectionConfigurationProvider implements Provider<Collecti
 
 
     @Inject
-    public DefaultCollectionConfigurationProvider(
+    public CollectionConfigurationProvider(
             @Named("vertx.manager.queue.atomicity.mode") PropertyContainer atomicityMode,
             @Named("vertx.manager.queue.cache.mode") PropertyContainer cacheMode,
             @Named("vertx.manager.queue.memory.mode") PropertyContainer memoryMode,

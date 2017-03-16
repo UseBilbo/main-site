@@ -1,4 +1,4 @@
-package com.usebilbo.vertx.mvstore;
+package com.usebilbo.vertx.cluster.configuration.mvstore;
 
 import java.util.HashMap;
 import java.util.concurrent.Executors;
@@ -35,10 +35,10 @@ public class MVStoreCacheStoreFactoryProvider implements CacheStoreFactoryProvid
 
 
     @Inject
-    public MVStoreCacheStoreFactoryProvider(@Named("grid.storage.path") PropertyContainer storage,
-                                            @Named("grid.storage.compaction.interval") PropertyContainer interval,
-                                            @Named("grid.storage.compaction.fill.rate") PropertyContainer fillRate,
-                                            @Named("grid.storage.compaction.write.size") PropertyContainer writeSize) {
+    public MVStoreCacheStoreFactoryProvider(@Named("vertx.cluster.storage.path") PropertyContainer storage,
+                                            @Named("vertx.cluster.storage.compaction.interval") PropertyContainer interval,
+                                            @Named("vertx.cluster.storage.compaction.fill.rate") PropertyContainer fillRate,
+                                            @Named("vertx.cluster.storage.compaction.write.size") PropertyContainer writeSize) {
         this.fillRate = fillRate.asInt(DEFAULT_FILL_RATE);
         this.writeSize = writeSize.asInt(DEFAULT_WRITE_SIZE);
         this.compactionInterval = interval.asDuration();

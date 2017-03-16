@@ -1,7 +1,6 @@
 package com.usebilbo.vertx.cluster;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +19,6 @@ import com.usebilbo.vertx.cluster.api.ClusterFileSystem;
 @ClusterCacheConfigurations
 //TODO: rework it according to current requirements
 public class SystemCaches implements CacheConfigurations {
-    public static final String NODE_GROUPS_CACHE = "node.groups";
-    public static final String NODE_SERVICES_CACHE = "node.node-to-services";
-    public static final String SERVICE_NODES_CACHE = "node.service-to-nodes";
-    public static final String NODE_VARIABLES_CACHE = "node.variables";
-
-    private static final String[] SYSTEM_CACHES = {NODE_GROUPS_CACHE, NODE_SERVICES_CACHE, SERVICE_NODES_CACHE, NODE_VARIABLES_CACHE};
-
     private List<String> igfsCaches;
     private final CacheConfigurationFactory configFactory;
 
@@ -47,23 +39,6 @@ public class SystemCaches implements CacheConfigurations {
 
     @Override
     public List<CacheConfiguration<?, ?>> get() {
-        List<CacheConfiguration<?, ?>> result = new ArrayList<>();
-        result.addAll(systemCaches());
-        result.addAll(igfsCaches());
-        return result;
-    }
-
-    private List<CacheConfiguration<?, ?>> systemCaches() {
-        List<CacheConfiguration<?, ?>> result = new ArrayList<>();
-
-        for (String name : SYSTEM_CACHES) {
-            result.add(configFactory.transientAtomicReplicatedCache(name));
-        }
-
-        return result;
-    }
-
-    private Collection<? extends CacheConfiguration<?, ?>> igfsCaches() {
         return igfsCaches.stream().map(name -> configFactory.igfsCache(name)).collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ import com.usebilbo.vertx.module.provider.RouterProvider;
 import io.vertx.ext.web.Router;
 
 @SystemModule
-public class PostVertxModule extends AbstractModule {
+public class CoreSystemModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Router.class).toProvider(RouterProvider.class);

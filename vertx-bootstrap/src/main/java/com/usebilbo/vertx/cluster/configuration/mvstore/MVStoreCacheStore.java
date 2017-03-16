@@ -1,4 +1,4 @@
-package com.usebilbo.vertx.mvstore;
+package com.usebilbo.vertx.cluster.configuration.mvstore;
 
 import java.util.Collection;
 import java.util.HashMap;
