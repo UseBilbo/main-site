@@ -7,9 +7,14 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.usebilbo.vertx.util.Utils;
+
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface RestRoute {
     String path();
+    
+    String produces() default Utils.NULL_STRING;
+    String consumes() default Utils.NULL_STRING;
 }

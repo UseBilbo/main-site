@@ -82,7 +82,7 @@ public class PropertiesModule extends AbstractModule {
         return result.stream().map(c -> PropertiesLoader.CLASSPATH_PREFIX + "/" + c).collect(Collectors.toList());
     }
 
-    private static String calculatePrefix() {
+    protected static String calculatePrefix() {
         String[] parts = PropertiesModule.class.getPackage().getName().split("\\.", 3);
         return new StringBuilder(parts[0]).append('/').append(parts[1]).toString();
     }

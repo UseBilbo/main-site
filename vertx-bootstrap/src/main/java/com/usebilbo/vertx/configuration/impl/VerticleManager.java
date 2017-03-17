@@ -1,6 +1,7 @@
 package com.usebilbo.vertx.configuration.impl;
 
 import static com.usebilbo.vertx.util.Utils.ifNotNull;
+import static com.usebilbo.vertx.util.Utils.orNull;
 
 import java.util.Set;
 
@@ -47,8 +48,8 @@ public class VerticleManager extends AbstractVerticle {
             options.setWorkerPoolSize(cfg.workerPoolSize());
             options.setInstances(cfg.instances());
             options.setMaxWorkerExecuteTime(cfg.maxWorkerExecuteTime());
-            options.setIsolationGroup(cfg.isolationGroup());
-            options.setWorkerPoolName(cfg.workerPoolName());
+            options.setIsolationGroup(orNull(cfg.isolationGroup()));
+            options.setWorkerPoolName(orNull(cfg.workerPoolName()));
             return null;
         });
 

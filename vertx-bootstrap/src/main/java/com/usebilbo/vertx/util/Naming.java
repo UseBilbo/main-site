@@ -31,8 +31,8 @@ public final class Naming {
         return coalesce(name((AnnotatedElement) field), field.getName());
     }
 
-    public static String name(Executable field) {
-        return coalesce(name((AnnotatedElement) field), field.getName());
+    public static String name(Executable executable) {
+        return coalesce(name((AnnotatedElement) executable), executable.getName());
     }
 
     private static String name(AnnotatedElement name) {

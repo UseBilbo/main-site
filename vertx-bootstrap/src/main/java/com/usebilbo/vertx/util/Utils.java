@@ -8,9 +8,14 @@ import java.nio.file.Path;
 import java.util.*;
 
 public final class Utils {
+    public static final String NULL_STRING = "null";
     private static final int BUFFER_SIZE = 16384;
 
     private Utils() {
+    }
+    
+    public static String orNull(String nullable) {
+        return NULL_STRING.equalsIgnoreCase(nullable) ? null : nullable;
     }
 
     public static <T> T coalesce(T obj1, T obj2) {

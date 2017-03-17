@@ -1,4 +1,4 @@
-package com.ueesebilbo.vertx.web.configuration;
+package com.usebilbo.vertx.web.configuration;
 
 import java.util.List;
 
@@ -72,6 +72,6 @@ public class RestConfigurator implements Configurator<Router> {
     }
 
     private void print(RestMethod method, RestBean bean) {
-        //TODO: finish it
+        LOG.info("REST API: {}{}", bean.path(), method.path());
     }
 }

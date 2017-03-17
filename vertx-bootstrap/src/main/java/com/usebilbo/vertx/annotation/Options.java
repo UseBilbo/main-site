@@ -7,6 +7,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.usebilbo.vertx.util.Utils;
+
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.VertxOptions;
 
@@ -19,8 +21,8 @@ import io.vertx.core.VertxOptions;
 public @interface Options {
     boolean worker() default DeploymentOptions.DEFAULT_WORKER;
     boolean multiThreaded() default DeploymentOptions.DEFAULT_MULTI_THREADED;
-    String isolationGroup() default "null";
-    String workerPoolName() default "null";
+    String isolationGroup() default Utils.NULL_STRING;
+    String workerPoolName() default Utils.NULL_STRING;
     int workerPoolSize() default VertxOptions.DEFAULT_WORKER_POOL_SIZE;
     long maxWorkerExecuteTime() default VertxOptions.DEFAULT_MAX_WORKER_EXECUTE_TIME;
     boolean ha() default DeploymentOptions.DEFAULT_HA;
