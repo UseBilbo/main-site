@@ -29,16 +29,53 @@ const muiTheme = getMuiTheme({
   }
 })
 
+function getUrlParams(search) {
+    let hashes = search.slice(search.indexOf('?') + 1).split('&')
+    let params = {}
+    hashes.map(hash => {
+        let [key, val] = hash.split('=');
+        params[key] = decodeURIComponent(val);
+        return "";
+    })
+
+    return params
+}
+
+const params = getUrlParams(window.location.search);
+
+const Landing = () => (
+  <div>
+    <LandingPageTop />
+    <Invitation />
+    <Comments />
+    <RegisterForm />
+    <LandingFooter />
+  </div>
+);
+
+const ThankYouPage = () => (
+  <div>
+    <LandingPageTop />
+      <div>
+        <h1>ID: {params["id"]}</h1>
+      </div>
+    <LandingFooter />
+  </div>
+);
+
 class App extends Component {
-  render () {
+  render() {
+    var component;
+    if (!params["id"]) {
+      component = <Landing />;
+    } else {
+      component = <ThankYouPage />;
+    }
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <LandingPageTop />
-          <Invitation />
-          <Comments />
-          <RegisterForm />
-          <LandingFooter />
+          {component}
         </div>
       </MuiThemeProvider>
     )

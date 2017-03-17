@@ -53,17 +53,19 @@ public class Launcher {
     }
     
     private void launch() {
-        Injector injector = createRootInjector();
-        Vertx vertx = Vertx.vertx(injector.getInstance(VertxOptions.class));
-        
-        injector = injector.createChildInjector(new VertxModule(vertx));
-        
-        injector = injector.createChildInjector(collectModules(injector, SystemModule.class));
-        
-        injector = injector.createChildInjector(collectModules(injector, AppModule.class));
-        
-        vertx.registerVerticleFactory(new GuiceVerticleFactory(injector));
-        vertx.deployVerticle(getFullVerticleName(VerticleManager.class), new DeploymentOptions());
+        Injector bootInjector = createRootInjector();
+        Vertx.clusteredVertx(bootInjector.getInstance(VertxOptions.class), (res) -> {
+            if (res.succeeded()) {
+                Vertx vertx = res.result();
+                
+                Injector injector = bootInjector.createChildInjector(new VertxModule(vertx));
+                injector = injector.createChildInjector(collectModules(injector, SystemModule.class));
+                injector = injector.createChildInjector(collectModules(injector, AppModule.class));
+                
+                vertx.registerVerticleFactory(new GuiceVerticleFactory(injector));
+                vertx.deployVerticle(getFullVerticleName(VerticleManager.class), new DeploymentOptions());
+            }
+        });
     }
 
     private Injector createRootInjector() {

@@ -9,11 +9,13 @@ public class RestBeanImpl implements RestBean {
     private final Class<?> type;
     private final String path;
     private final List<RestMethod> methods;
+    private final boolean usesParsedBody;
     
-    public RestBeanImpl(Class<?> type, String path, List<RestMethod> methods) {
+    public RestBeanImpl(Class<?> type, String path, List<RestMethod> methods, boolean usesParsedBody) {
         this.type = type;
         this.path = path;
         this.methods = methods;
+        this.usesParsedBody = usesParsedBody;
     }
 
     @Override
@@ -39,5 +41,10 @@ public class RestBeanImpl implements RestBean {
     @Override
     public String toString() {
         return this.path + " " + methods;
+    }
+
+    @Override
+    public boolean isBeforeBodyParsed() {
+        return !usesParsedBody;
     }
 }

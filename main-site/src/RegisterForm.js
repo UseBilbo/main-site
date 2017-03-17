@@ -1,4 +1,3 @@
-import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -20,23 +19,15 @@ const formStyle = {
   verticalAlignment:'middle',
 }
 
-const labelStyle = {
-  fontSize: '36px',
-  margin: 30,
-}
-
 const hintStyle = {
   fontSize: '28px',
   color: '#7ed9e3',
-//  textAlign: 'center',
-//  position: 'relative',
   zIndex: '-1',
 }
 
 const inputStyle = {
   color: '#7ed9e3',
   fontSize: '28px',
-//  textAlign: 'center',
 }
 
 const RegisterForm = (props) => (

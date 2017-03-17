@@ -16,5 +16,8 @@ public @interface RestRoute {
     String value();
     
     String produces() default Utils.NULL_STRING;
+
     String consumes() default Utils.NULL_STRING;
+    
+    boolean parsedBody() default true;
 }

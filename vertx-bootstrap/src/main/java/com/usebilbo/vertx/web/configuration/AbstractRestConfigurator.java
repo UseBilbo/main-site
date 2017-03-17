@@ -1,45 +1,42 @@
 package com.usebilbo.vertx.web.configuration;
 
-import java.util.List;
+import static com.usebilbo.vertx.util.Utils.doIfNotNull;
 
-import javax.inject.Inject;
+import java.util.List;
+import java.util.function.Predicate;
+
 import javax.inject.Provider;
-import javax.inject.Singleton;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.inject.Injector;
-import com.usebilbo.vertx.annotation.Order;
-import com.usebilbo.vertx.annotation.RouterConfiguration;
-import com.usebilbo.vertx.annotation.RoutingOrder;
 import com.usebilbo.vertx.configuration.Configurator;
-import static com.usebilbo.vertx.util.Utils.*;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 
-@Singleton
-@Order(RoutingOrder.MIDDLE)
-@RouterConfiguration
-public class RestConfigurator implements Configurator<Router> {
+public class AbstractRestConfigurator implements Configurator<Router> {
     private static final Logger LOG = LogManager.getLogger();
         
     private final List<RestBean> beans;
     private final Provider<Vertx> vertx;
     private final Injector injector;
+    private final Predicate<RestBean> filteringPredicate;
+    private final String text;
 
-    @Inject
-    public RestConfigurator(Injector injector, Provider<Vertx> vertx, List<RestBean> beans) {
+    public AbstractRestConfigurator(Injector injector, Provider<Vertx> vertx, List<RestBean> beans, Predicate<RestBean> filteringPredicate, String text) {
         this.injector = injector;
         this.vertx = vertx;
         this.beans = beans;
+        this.filteringPredicate = filteringPredicate;
+        this.text = text;
     }
 
     @Override
     public void configure(Router router) {
-        beans.stream().forEach(bean -> configure(bean, router));
+        beans.stream().filter(filteringPredicate).forEach(bean -> configure(bean, router));
     }
 
     private void configure(RestBean bean, Router router) {
@@ -73,6 +70,6 @@ public class RestConfigurator implements Configurator<Router> {
     }
     
     private void print(RestMethod method, RestBean bean) {
-        LOG.info("REST API: {}{}", bean.path(), method.path());
+        LOG.info("({}) REST API: {}{}", text, bean.path(), method.path());
     }
 }

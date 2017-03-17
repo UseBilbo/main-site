@@ -50,7 +50,6 @@ public class ClusterModule extends AbstractModule {
     protected void configure() {
         bind(CollectionConfiguration.class).annotatedWith(ClusterManagerQueue.class).toProvider(CollectionConfigurationProvider.class);
         
-        bind(Ignite.class).toProvider(IgniteProvider.class);
         bind(new TypeLiteral<BeanParser<PersistentConfig>>(){}).to(PersistenceBeanParserImpl.class);
         bind(new TypeLiteral<BeanParser<RestBean>>(){}).to(RestBeanParserImpl.class);
         bind(AddressResolverOptions.class).toProvider(AddressResolverOptionsProvider.class);
@@ -62,6 +61,7 @@ public class ClusterModule extends AbstractModule {
         bind(new TypeLiteral<List<CacheConfiguration<?, ?>>>(){}).toProvider(CacheConfigurationProvider.class);
         bind(new TypeLiteral<List<RestBean>>(){}).toProvider(RestBeansProvider.class);
         bind(IgniteConfiguration.class).toProvider(IgniteConfigurationProvider.class);
+        bind(Ignite.class).toProvider(IgniteProvider.class);
         bind(LazyReferenceFactory.class).to(LazyReferenceFactoryImpl.class);
         bind(TransactionManager.class).to(TransactionManagerImpl.class);
         bind(FsHelper.class).to(FsHelperImpl.class);

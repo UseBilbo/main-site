@@ -26,7 +26,8 @@ public class PropertiesModule extends AbstractModule {
 
     private static final String PATH_PREFIX = calculatePrefix();
     private static final String CONFIG_EXTENSION = "boot.conf";
-    private static final String SYSTEM_PROPERTIES = "vertx.system.properties.*";
+    private static final String SYSTEM_PROPERTIES_PREFIX = "vertx.system.properties.";
+    private static final String SYSTEM_PROPERTIES = SYSTEM_PROPERTIES_PREFIX + "*";
     
     private final CommandLine commandLine;
     private final GroupBuilder groupBuilder;
@@ -47,7 +48,16 @@ public class PropertiesModule extends AbstractModule {
         if (props == null) {
             return;
         }
-        props.forEach((key, value) -> System.setProperty(key,  ListUtils.last(value)));
+        props.forEach((key, value) -> setSystemProperty(stripPrefix(key), ListUtils.last(value)));
+    }
+
+    private String setSystemProperty(String key, String value) {
+        LOG.info("System property: {} = {}", key, value);
+        return System.setProperty(key,  value);
+    }
+
+    private String stripPrefix(String key) {
+        return key.substring(SYSTEM_PROPERTIES_PREFIX.length());
     }
 
     private Map<String, Map<String, List<String>>> configureApplicationProperties() {

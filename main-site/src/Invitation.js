@@ -89,20 +89,24 @@ const inputBackgroundStyle = {
   borderStyle: 'solid',
 }
 
+//            onTouchTap={(e) => {console.log("Submitting %o", e);}}
 const Invitation = () => (
   <Paper style={outerPaperStyle}>
     <div style={labelStyle}>w tworzeniu!</div>
       <div style={innerPaperStyle}>
         Prosty sposób na pożyczanie książek od i swoim znajomym
         <div style={spacerStyle}>&nbsp;</div>
-        <form style={formStyle}>
+        <form style={formStyle} id="form1" action="/api/register" method="POST">
           <div style={inputBackgroundStyle}>
           <TextField hintText="&nbsp;&nbsp;&nbsp;Zapisz się - podaj swój email" 
             name="email" type="email" hintStyle={hintStyle} inputStyle={inputStyle} fullWidth={true}
-            underlineShow={false}/> 
+            underlineShow={false}/>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <FlatButton icon={<img src="image/keyboard-right.png" alt="Send"/>} style={buttonStyle}/>
+          <FlatButton
+            type="submit"
+            icon={<img src="image/keyboard-right.png" alt="Send"/>}
+            style={buttonStyle}/>
           </div>
         </form>
         <div style={spacer2Style}>&nbsp;</div>

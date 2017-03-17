@@ -7,12 +7,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.usebilbo.vertx.annotation.AppVerticle;
+import com.usebilbo.vertx.annotation.Options;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 
 @AppVerticle
+@Options(ha=true)
 public class HttpVerticle extends AbstractVerticle {
     private static final Logger LOG = LogManager.getLogger();
     

@@ -10,4 +10,6 @@ public interface RestBean {
     Class<?> type();
     
     String methodPath(String path);
+
+    boolean isBeforeBodyParsed();
 }

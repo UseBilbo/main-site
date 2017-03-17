@@ -39,7 +39,7 @@ public class RestBeanParserImpl implements BeanParser<RestBean> {
             return null;
         }
         
-        return new RestBeanImpl(clazz, normalizePath(route.value()), parseMethods(clazz, orNull(route.produces()), orNull(route.consumes())));
+        return new RestBeanImpl(clazz, normalizePath(route.value()), parseMethods(clazz, orNull(route.produces()), orNull(route.consumes())), route.parsedBody());
     }
 
     private List<RestMethod> parseMethods(Class<?> clazz, String beanProduces, String beanConsumes) {

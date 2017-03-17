@@ -78,10 +78,6 @@ const authorStyle = {
   textAlign: 'right'
 }
 
-const pictureStyle = {
-  verticalAlign: 'bottom',
-}
-
 const iconStyle = {
   verticalAlign: 'bottom',
 }
