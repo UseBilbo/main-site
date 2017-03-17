@@ -36,4 +36,8 @@ public class RestBeanImpl implements RestBean {
         return this.path + path;
     }
 
+    @Override
+    public String toString() {
+        return this.path + " " + methods;
+    }
 }

@@ -67,4 +67,9 @@ public class RestMethodImpl implements RestMethod {
     public boolean isRegexp() {
         return regexp;
     }
+    
+    @Override
+    public String toString() {
+        return path;
+    }
 }

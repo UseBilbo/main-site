@@ -13,7 +13,7 @@ import com.usebilbo.vertx.util.Utils;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface RestRoute {
-    String path();
+    String value();
     
     String produces() default Utils.NULL_STRING;
     String consumes() default Utils.NULL_STRING;

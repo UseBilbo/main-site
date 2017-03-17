@@ -14,6 +14,7 @@ import com.usebilbo.vertx.annotation.Order;
 import com.usebilbo.vertx.annotation.RouterConfiguration;
 import com.usebilbo.vertx.annotation.RoutingOrder;
 import com.usebilbo.vertx.configuration.Configurator;
+import static com.usebilbo.vertx.util.Utils.*;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Route;
@@ -52,9 +53,9 @@ public class RestConfigurator implements Configurator<Router> {
     //TODO: add failure handler?
     private void addRoute(Router subRouter, RestMethod method, RestBean bean, Object instance) {
         Route route = subRouter.route();
-        
-        route.consumes(method.consumes());
-        route.produces(method.produces());
+
+        doIfNotNull(method.consumes(), v -> route.consumes(v));
+        doIfNotNull(method.produces(), v -> route.produces(v));
 
         route.method(method.method());
         
@@ -70,7 +71,7 @@ public class RestConfigurator implements Configurator<Router> {
             route.handler((context) -> method.call(context, instance));
         }
     }
-
+    
     private void print(RestMethod method, RestBean bean) {
         LOG.info("REST API: {}{}", bean.path(), method.path());
     }

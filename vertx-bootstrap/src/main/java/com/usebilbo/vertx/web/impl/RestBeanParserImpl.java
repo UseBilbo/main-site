@@ -39,7 +39,7 @@ public class RestBeanParserImpl implements BeanParser<RestBean> {
             return null;
         }
         
-        return new RestBeanImpl(clazz, normalizePath(route.path()), parseMethods(clazz, orNull(route.produces()), orNull(route.consumes())));
+        return new RestBeanImpl(clazz, normalizePath(route.value()), parseMethods(clazz, orNull(route.produces()), orNull(route.consumes())));
     }
 
     private List<RestMethod> parseMethods(Class<?> clazz, String beanProduces, String beanConsumes) {
@@ -53,7 +53,7 @@ public class RestBeanParserImpl implements BeanParser<RestBean> {
         REST rest = m.getAnnotation(REST.class);
         
         return new RestMethodImpl(m, 
-                buildParameter(rest.path(), Naming.name(m)), 
+                normalizePath(buildParameter(rest.path(), Naming.name(m))), 
                 buildParameter(rest.consumes(), beanConsumes), 
                 buildParameter(rest.produces(), beanProduces), 
                 rest.blocking(), 
@@ -66,12 +66,16 @@ public class RestBeanParserImpl implements BeanParser<RestBean> {
     }
 
     private boolean isAcceptable(Method m) {
-        return m.isAnnotationPresent(REST.class) && hasCorrectParameters(m) && hasCorrectType(m);
+        boolean annotationPresent = m.isAnnotationPresent(REST.class);
+        boolean hasCorrectParameters = hasCorrectParameters(m);
+        boolean hasCorrectType = hasCorrectType(m);
+        
+        return annotationPresent && hasCorrectParameters && hasCorrectType;
     }
 
     private boolean hasCorrectType(Method m) {
         int modifiers = m.getModifiers();
-        return !(m.isSynthetic() || !m.isAccessible() || isNative(modifiers) || isAbstract(modifiers) || isStatic(modifiers) || isTransient(modifiers));
+        return !(m.isSynthetic() || isNative(modifiers) || isAbstract(modifiers) || isStatic(modifiers) || isTransient(modifiers));
         
     }
 

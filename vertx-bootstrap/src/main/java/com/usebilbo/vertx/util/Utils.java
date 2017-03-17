@@ -43,12 +43,23 @@ public final class Utils {
         return (obj1 != null) ? value1.eval(obj1) : null;
     }
 
+    public static <P> P doIfNotNull(P obj1, LazyInvoke<P> value1) {
+        if(obj1 != null) {
+            value1.eval(obj1);
+        }
+        return obj1;
+    }
+    
     public static <T> T ifNotNull(Object obj1, LazyEvaluator<T> value1, LazyEvaluator<T> value2) {
         return (obj1 != null) ? value1.eval() : value2.eval();
     }
 
     public static interface LazyEvaluator<T> {
         T eval();
+    }
+
+    public static interface LazyInvoke<T> {
+        void eval(T param);
     }
 
     public static interface LazyParamEvaluator<T, P> {
