@@ -2,6 +2,8 @@ package com.usebilbo.vertx.cluster.api;
 
 import java.util.Optional;
 
+import javax.cache.Cache;
+
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.query.Query;
 import org.apache.ignite.cache.query.QueryCursor;
@@ -72,7 +74,15 @@ public interface CoreDao<K, V> {
      *             in case of error.
      */
     <R> QueryCursor<R> query(Query<R> query);
-     
+
+    /**
+     * Start execution of the query.
+     *
+     * @throws CorePersistenceException
+     *             in case of error.
+     */
+    QueryCursor<Cache.Entry<K, V>> query(String sql, Object ...args);
+    
     /**
      * Create new instance. Note that passed key value can be null. In this case
      * key field should remain <code>null</code> in the created instance.

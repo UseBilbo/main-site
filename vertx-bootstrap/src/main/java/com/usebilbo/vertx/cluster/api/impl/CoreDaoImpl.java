@@ -4,6 +4,7 @@ import static com.usebilbo.vertx.util.Utils.coalesce;
 
 import java.util.Optional;
 
+import javax.cache.Cache;
 import javax.inject.Inject;
 
 import org.apache.ignite.IgniteAtomicSequence;
@@ -87,7 +88,7 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
 
     private K key(V value, K key) {
         try {
-            config.key().set(key, value);
+            config.key().set(value, key);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             throw new CorePersistenceException(
                     "Exception while setting key to value of type " + valueType.getSimpleName(), e);
@@ -127,5 +128,10 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
     @Override
     public <R> QueryCursor<R> query(Query<R> query) {
         return cache().query(query);
+    }
+
+    @Override
+    public QueryCursor<Cache.Entry<K, V>> query(String sql, Object... args) {
+        return query(newQuery(sql, args));
     }
 }

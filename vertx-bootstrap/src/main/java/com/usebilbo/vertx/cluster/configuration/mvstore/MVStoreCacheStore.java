@@ -24,7 +24,7 @@ import com.usebilbo.vertx.util.Locker;
 
 public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     private static final Logger LOG = LogManager.getLogger();
-    
+
     private final MVMap<K, V> map;
     private final ReadWriteLock lock = new ReentrantReadWriteLock(false);
     private final String name;
@@ -39,6 +39,8 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
         }
 
         this.map = store.openMap(name, builder);
+
+        LOG.info("Map {} is opened", name);
     }
 
     @Override
@@ -60,6 +62,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     @Override
     public void write(Entry<? extends K, ? extends V> entry) throws CacheWriterException {
         try (Locker locker = Locker.forWrite(lock)) {
+            logWrite(entry);
             map.put(entry.getKey(), entry.getValue());
         }
     }
@@ -67,8 +70,12 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     @Override
     public void writeAll(Collection<Entry<? extends K, ? extends V>> entries) throws CacheWriterException {
         try (Locker locker = Locker.forWrite(lock)) {
-            entries.forEach(e -> map.put(e.getKey(), e.getValue()));
+            entries.stream().peek(this::logWrite).forEach(e -> map.put(e.getKey(), e.getValue()));
         }
+    }
+
+    private void logWrite(Entry<? extends K, ? extends V> entry) {
+        LOG.info("Writing {}->{} to {}", entry.getKey(), entry.getValue(), map.getName());
     }
 
     @Override

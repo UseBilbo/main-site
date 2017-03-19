@@ -1,5 +1,9 @@
 package com.usebilbo.node.rest;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.cache.Cache.Entry;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -34,15 +38,32 @@ public class Register {
             response.end();
             return;
         }
+
+        List<Entry<Long, AccountBase>> result = dao.query("email = ?", email).getAll();
         
         
+        if (!result.isEmpty()) {
+            sendError(response, 1);
+            return;
+        }
         
-        //dao.
+        Optional<AccountBase> account = dao.persist(AccountBase.of(email));
+        
+        if (!account.isPresent()) {
+            sendError(response, 2);
+            return;
+        }
         
         //response.putHeader("content-type", "text/plain");
         //response.end("Hello World from vert-bootstrap! (" + email + ")");
         response.setStatusCode(HttpResponseStatus.FOUND.code());
-        response.putHeader(HttpHeaders.LOCATION.toString(), "/index.html?id=" + email.hashCode());
+        response.putHeader(HttpHeaders.LOCATION.toString(), "/index.html?id=" + account.get().getId());
+        response.end();
+    }
+
+    private void sendError(HttpServerResponse response, int errorCode) {
+        response.setStatusCode(HttpResponseStatus.FOUND.code());
+        response.putHeader(HttpHeaders.LOCATION.toString(), "/index.html?err=" + errorCode);
         response.end();
     }
 }
