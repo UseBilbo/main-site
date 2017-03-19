@@ -13,4 +13,8 @@ public interface PersistentConfig {
     Class<?> keyType();
 
     Class<?> valueType();
+    
+    Class<?> daoInterface();
+    
+    Class<?> daoClass();
 }

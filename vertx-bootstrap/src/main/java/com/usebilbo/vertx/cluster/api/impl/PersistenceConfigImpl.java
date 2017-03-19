@@ -1,8 +1,14 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.usebilbo.vertx.annotation.ID;
+import com.usebilbo.vertx.annotation.Persistent;
 import com.usebilbo.vertx.cluster.api.PersistentConfig;
+import com.usebilbo.vertx.exception.CorePersistenceException;
+import com.usebilbo.vertx.util.ClassUtils;
 import com.usebilbo.vertx.util.FieldAdapter;
 
 class PersistenceConfigImpl implements PersistentConfig {
@@ -10,12 +16,16 @@ class PersistenceConfigImpl implements PersistentConfig {
     private final boolean transactional;
     private final Class<?> valueType;
     private final FieldAdapter keyField;
+    private final Class<?> daoInterface;
+    private final Class<?> daoImpl;
     
-    PersistenceConfigImpl(String cacheName, Field keyField, Class<?> valueType, boolean transactional) {
-        this.valueType = valueType;
+    public PersistenceConfigImpl(String cacheName, Persistent annotation, Class<?> valueType) {
         this.cacheName = cacheName;
-        this.transactional = transactional;
-        this.keyField = FieldAdapter.of(keyField);
+        this.valueType = valueType;
+        this.keyField = FieldAdapter.of(locateKey(valueType));
+        this.transactional = annotation.transactional();
+        this.daoInterface = annotation.iface();
+        this.daoImpl = annotation.impl();
     }
 
     @Override
@@ -55,5 +65,26 @@ class PersistenceConfigImpl implements PersistentConfig {
         builder.append("]").toString();
         
         return builder.toString(); 
+    }
+
+    @Override
+    public Class<?> daoInterface() {
+        return daoInterface;
+    }
+    
+    @Override
+    public Class<?> daoClass() {
+        return daoImpl;
+    }
+
+    private static Field locateKey(Class<?> bean) {
+        List<Field> keys = ClassUtils.fieldsOf(bean).filter(fld -> fld.isAnnotationPresent(ID.class))
+                                    .collect(Collectors.toList());
+
+        if (keys.size() != 1) {
+            throw new CorePersistenceException("Class " + bean.getSimpleName() + " must contain exactly one field with @ID annotation");
+        }
+
+        return keys.get(0);
     }
 }

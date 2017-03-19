@@ -34,6 +34,10 @@ public final class Utils {
         T obj1 = value1.eval();
         return (obj1 != null) ? obj1 : value2.eval();
     }
+    
+    public static <T> T ifEmpty(String seq, LazyEvaluator<T> ifYes, LazyParamEvaluator<T, String> ifNot) {
+        return isEmpty(seq) ? ifYes.eval() : ifNot.eval(seq);
+    }
 
     public static <T> T ifNotNull(Object obj1, LazyEvaluator<T> value1) {
         return (obj1 != null) ? value1.eval() : null;

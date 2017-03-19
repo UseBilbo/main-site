@@ -1,22 +1,16 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.stream.Collectors;
+import static com.usebilbo.vertx.util.Utils.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.reflections.util.Utils;
-
-import com.usebilbo.vertx.annotation.ID;
 import com.usebilbo.vertx.annotation.Persistent;
 import com.usebilbo.vertx.cluster.api.BeanParser;
 import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.exception.CorePersistenceException;
 import com.usebilbo.vertx.properties.PropertyContainer;
-import com.usebilbo.vertx.util.ClassUtils;
 import com.usebilbo.vertx.util.Naming;
 
 @Singleton
@@ -25,11 +19,8 @@ public class PersistenceBeanParserImpl implements BeanParser<PersistentConfig> {
 
     @Inject
     public PersistenceBeanParserImpl(@Named("vertx.persistence.schema.prefix") PropertyContainer schemaPrefix) {
-        this.schemaPrefix = preparePrefix(schemaPrefix.asString(""));
-    }
-
-    private static String preparePrefix(String prefix) {
-        return Utils.isEmpty(prefix) ? "" : prefix + ".";
+        this.schemaPrefix = ifEmpty(schemaPrefix.asString(""), () -> "", (p) -> p + ".");
+        
     }
 
     @Override
@@ -39,28 +30,10 @@ public class PersistenceBeanParserImpl implements BeanParser<PersistentConfig> {
             throw new CorePersistenceException("No Persistent annotation is present for " + bean.getSimpleName());
         }
         
-        return new PersistenceConfigImpl(buildName(ann, bean), 
-                                         locateKey(bean), 
-                                         bean, 
-                                         ann.transactional());
-    }
-
-    private Field locateKey(Class<?> bean) {
-        List<Field> keys = ClassUtils.fieldsOf(bean).filter(fld -> fld.isAnnotationPresent(ID.class))
-                                    .collect(Collectors.toList());
-
-        if (keys.size() != 1) {
-            throw new CorePersistenceException("Class " + bean.getSimpleName() + " must have exactly one field with @ID annotation");
-        }
-
-        return keys.get(0);
+        return new PersistenceConfigImpl(buildName(ann, bean), ann, bean);
     }
 
     private String buildName(Persistent ann, Class<?> bean) {
-        if (!Utils.isEmpty(ann.cacheName())) {
-            return ann.cacheName();
-        }
-
         return schemaPrefix + Naming.name(bean);
     }
 }

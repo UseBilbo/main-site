@@ -2,8 +2,11 @@ package com.usebilbo.vertx.cluster;
 
 import org.apache.ignite.configuration.CacheConfiguration;
 
+import com.google.inject.ImplementedBy;
 import com.usebilbo.vertx.cluster.api.PersistentConfig;
+import com.usebilbo.vertx.cluster.configuration.CacheConfigurationFactoryImpl;
 
+@ImplementedBy(CacheConfigurationFactoryImpl.class)
 public interface CacheConfigurationFactory {
 
     CacheConfiguration<?, ?> igfsCache(String cacheName);

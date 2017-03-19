@@ -8,17 +8,17 @@ import com.usebilbo.vertx.annotation.Persistent;
 @Persistent
 public class AccountBase {
     @ID
-    private long id;
+    private Long id;
 
     @QuerySqlField
     private String email;
     private String password;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

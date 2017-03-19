@@ -10,19 +10,9 @@ import org.apache.ignite.configuration.IgniteConfiguration;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.usebilbo.vertx.annotation.ClusterManagerQueue;
-import com.usebilbo.vertx.cluster.CacheConfigurationFactory;
-import com.usebilbo.vertx.cluster.CacheStoreFactoryProvider;
 import com.usebilbo.vertx.cluster.api.BeanParser;
-import com.usebilbo.vertx.cluster.api.LazyReferenceFactory;
 import com.usebilbo.vertx.cluster.api.PersistentConfig;
-import com.usebilbo.vertx.cluster.api.TransactionManager;
-import com.usebilbo.vertx.cluster.api.impl.LazyReferenceFactoryImpl;
 import com.usebilbo.vertx.cluster.api.impl.PersistenceBeanParserImpl;
-import com.usebilbo.vertx.cluster.api.impl.TransactionManagerImpl;
-import com.usebilbo.vertx.cluster.configuration.DefaultCacheConfigurationFactory;
-import com.usebilbo.vertx.cluster.configuration.mvstore.MVStoreCacheStoreFactoryProvider;
-import com.usebilbo.vertx.cluster.fs.FsHelper;
-import com.usebilbo.vertx.cluster.fs.impl.FsHelperImpl;
 import com.usebilbo.vertx.cluster.manager.IgniteClusterManager;
 import com.usebilbo.vertx.cluster.manager.impl.CollectionConfigurationProvider;
 import com.usebilbo.vertx.module.provider.AddressResolverOptionsProvider;
@@ -55,16 +45,13 @@ public class ClusterModule extends AbstractModule {
         bind(AddressResolverOptions.class).toProvider(AddressResolverOptionsProvider.class);
         bind(MetricsOptions.class).toProvider(MetricsOptionsProvider.class);
         bind(EventBusOptions.class).toProvider(EventBusOptionsProvider.class);
-        bind(CacheStoreFactoryProvider.class).to(MVStoreCacheStoreFactoryProvider.class);
-        bind(CacheConfigurationFactory.class).to(DefaultCacheConfigurationFactory.class);
+        
         bind(new TypeLiteral<List<PersistentConfig>>(){}).toProvider(PersistenceConfigProvider.class);
         bind(new TypeLiteral<List<CacheConfiguration<?, ?>>>(){}).toProvider(CacheConfigurationProvider.class);
         bind(new TypeLiteral<List<RestBean>>(){}).toProvider(RestBeansProvider.class);
         bind(IgniteConfiguration.class).toProvider(IgniteConfigurationProvider.class);
         bind(Ignite.class).toProvider(IgniteProvider.class);
-        bind(LazyReferenceFactory.class).to(LazyReferenceFactoryImpl.class);
-        bind(TransactionManager.class).to(TransactionManagerImpl.class);
-        bind(FsHelper.class).to(FsHelperImpl.class);
+        
         bind(ClusterManager.class).to(IgniteClusterManager.class);
         bind(VertxOptions.class).toProvider(VertxOptionsProvider.class);
         bind(HttpServerOptions.class).toProvider(HttpOptionsProvider.class);

@@ -5,6 +5,10 @@ import org.apache.ignite.cluster.ClusterGroup;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.CollectionConfiguration;
 
+import com.google.inject.ImplementedBy;
+import com.usebilbo.vertx.cluster.api.impl.LazyReferenceFactoryImpl;
+
+@ImplementedBy(LazyReferenceFactoryImpl.class)
 public interface LazyReferenceFactory {
     <K, V> LazyReference<IgniteCache<K, V>> cache(String name);
     

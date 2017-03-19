@@ -17,7 +17,7 @@ import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.properties.PropertyContainer;
 
 @Singleton
-public class DefaultCacheConfigurationFactory implements CacheConfigurationFactory {
+public class CacheConfigurationFactoryImpl implements CacheConfigurationFactory {
     private final CacheStoreFactoryProvider storeProvider;
     private final int igfsGroupSize;
     private final int persistentBackups;
@@ -25,7 +25,7 @@ public class DefaultCacheConfigurationFactory implements CacheConfigurationFacto
     private final long offHeapSize;
 
     @Inject
-    public DefaultCacheConfigurationFactory(CacheStoreFactoryProvider storeProvider,
+    public CacheConfigurationFactoryImpl(CacheStoreFactoryProvider storeProvider,
                                             @Named("vertx.cluster.offheap.memory.per.cache") PropertyContainer offHeapSize,
                                             @Named("vertx.cluster.transient.backups") PropertyContainer transientBackups,
                                             @Named("vertx.cluster.persistent.backups") PropertyContainer persistentBackups,
