@@ -6,14 +6,14 @@ import javax.inject.Singleton;
 import org.apache.ignite.configuration.IgniteConfiguration;
 import org.reflections.Reflections;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.ClusterConfigurator;
+import com.usebilbo.vertx.module.CoreInjector;
 
 @Singleton
 public class IgniteConfigurationProvider  extends AbstractOptionsProvider<IgniteConfiguration> {
     
     @Inject
-    public IgniteConfigurationProvider(Injector injector, Reflections reflections) {
+    public IgniteConfigurationProvider(CoreInjector injector, Reflections reflections) {
         super(injector, reflections, ClusterConfigurator.class, "Ignite");
     }
 

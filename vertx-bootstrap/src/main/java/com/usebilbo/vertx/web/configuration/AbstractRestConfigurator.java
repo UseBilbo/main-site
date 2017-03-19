@@ -10,8 +10,8 @@ import javax.inject.Provider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.configuration.Configurator;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Route;
@@ -22,11 +22,11 @@ public class AbstractRestConfigurator implements Configurator<Router> {
         
     private final List<RestBean> beans;
     private final Provider<Vertx> vertx;
-    private final Injector injector;
+    private final CoreInjector injector;
     private final Predicate<RestBean> filteringPredicate;
     private final String text;
 
-    public AbstractRestConfigurator(Injector injector, Provider<Vertx> vertx, List<RestBean> beans, Predicate<RestBean> filteringPredicate, String text) {
+    public AbstractRestConfigurator(CoreInjector injector, Provider<Vertx> vertx, List<RestBean> beans, Predicate<RestBean> filteringPredicate, String text) {
         this.injector = injector;
         this.vertx = vertx;
         this.beans = beans;
@@ -41,7 +41,7 @@ public class AbstractRestConfigurator implements Configurator<Router> {
 
     private void configure(RestBean bean, Router router) {
         Router subRouter = Router.router(vertx.get());
-        Object instance = injector.getInstance(bean.type());
+        Object instance = injector.get(bean.type());
         
         bean.methods().stream().peek(m -> print(m, bean)).forEach(method -> addRoute(subRouter, method, bean, instance));
         router.mountSubRouter(bean.path(), subRouter);

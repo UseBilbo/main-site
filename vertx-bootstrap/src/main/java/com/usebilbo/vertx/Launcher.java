@@ -13,7 +13,6 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.usebilbo.vertx.annotation.AppModule;
 import com.usebilbo.vertx.annotation.SystemModule;
@@ -22,9 +21,11 @@ import com.usebilbo.vertx.configuration.impl.CommandLineImpl;
 import com.usebilbo.vertx.configuration.impl.GuiceVerticleFactory;
 import com.usebilbo.vertx.configuration.impl.VerticleManager;
 import com.usebilbo.vertx.module.ClusterModule;
+import com.usebilbo.vertx.module.CoreInjector;
 import com.usebilbo.vertx.module.CoreModule;
 import com.usebilbo.vertx.module.PropertiesModule;
 import com.usebilbo.vertx.module.VertxModule;
+import com.usebilbo.vertx.module.impl.GuiceCoreInjector;
 import com.usebilbo.vertx.properties.impl.GroupBuilderImpl;
 
 import io.vertx.core.DeploymentOptions;
@@ -53,30 +54,31 @@ public class Launcher {
     }
     
     private void launch() {
-        Injector bootInjector = createRootInjector();
-        Vertx.clusteredVertx(bootInjector.getInstance(VertxOptions.class), (res) -> {
+        CoreInjector bootInjector = createRootInjector();
+        
+        Vertx.clusteredVertx(bootInjector.get(VertxOptions.class), (res) -> {
             if (res.succeeded()) {
                 Vertx vertx = res.result();
                 
-                Injector injector = bootInjector.createChildInjector(new VertxModule(vertx));
-                injector = injector.createChildInjector(collectModules(injector, SystemModule.class));
-                injector = injector.createChildInjector(collectModules(injector, AppModule.class));
+                bootInjector.install(new VertxModule(vertx));
+                bootInjector.install(collectModules(bootInjector, SystemModule.class));
+                bootInjector.install(collectModules(bootInjector, AppModule.class));
                 
-                vertx.registerVerticleFactory(new GuiceVerticleFactory(injector));
+                vertx.registerVerticleFactory(new GuiceVerticleFactory(bootInjector));
                 vertx.deployVerticle(getFullVerticleName(VerticleManager.class), new DeploymentOptions());
             }
         });
     }
 
-    private Injector createRootInjector() {
+    private CoreInjector createRootInjector() {
         return Guice.createInjector(new CoreModule(reflections, commandLine), 
                 new PropertiesModule(commandLine, new GroupBuilderImpl(), reflections),
-                new ClusterModule());
+                new ClusterModule()).getInstance(GuiceCoreInjector.class);
     }
-
-    private List<Module> collectModules(Injector injector, Class<? extends Annotation> annotation) {
+    
+    private List<Module> collectModules(CoreInjector bootInjector, Class<? extends Annotation> annotation) {
         return reflections.getTypesAnnotatedWith(annotation, false).stream()
-                .map(cls -> ifNotNull(injector.getInstance(cls), inst -> (Module) inst))
+                .map(cls -> ifNotNull(bootInjector.get(cls), inst -> (Module) inst))
                 .filter(mod -> mod != null)
                 .collect(Collectors.toList());
     }

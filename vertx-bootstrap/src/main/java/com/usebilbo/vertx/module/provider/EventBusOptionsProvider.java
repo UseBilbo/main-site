@@ -5,15 +5,15 @@ import javax.inject.Singleton;
 
 import org.reflections.Reflections;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.EventBusOptionsConfigurator;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.eventbus.EventBusOptions;
 
 @Singleton
 public class EventBusOptionsProvider extends AbstractOptionsProvider<EventBusOptions> {
     @Inject
-    public EventBusOptionsProvider(Injector injector, Reflections reflections) {
+    public EventBusOptionsProvider(CoreInjector injector, Reflections reflections) {
         super(injector, reflections, EventBusOptionsConfigurator.class, "EventBusOptions");
     }
 

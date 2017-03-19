@@ -1,7 +1,7 @@
 package com.usebilbo.vertx.configuration.impl;
 import com.google.common.base.Preconditions;
-import com.google.inject.Injector;
 import com.usebilbo.vertx.Launcher;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.Verticle;
 import io.vertx.core.impl.verticle.CompilingClassLoader;
@@ -18,9 +18,9 @@ import io.vertx.core.spi.VerticleFactory;
  */
 public class GuiceVerticleFactory implements VerticleFactory {
     public static final String PREFIX = "java-guice";
-    private final Injector injector;
+    private final CoreInjector injector;
 
-    public GuiceVerticleFactory(Injector injector) {
+    public GuiceVerticleFactory(CoreInjector injector) {
         this.injector = Preconditions.checkNotNull(injector);
     }
 
@@ -42,10 +42,6 @@ public class GuiceVerticleFactory implements VerticleFactory {
             clazz = classLoader.loadClass(verticleName);
         }
 
-        return (Verticle) this.injector.getInstance(clazz);
-    }
-
-    public Injector getInjector() {
-        return injector;
+        return (Verticle) this.injector.get(clazz);
     }
 }

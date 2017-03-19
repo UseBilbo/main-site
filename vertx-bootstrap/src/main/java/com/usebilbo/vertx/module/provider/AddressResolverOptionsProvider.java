@@ -5,8 +5,8 @@ import javax.inject.Singleton;
 
 import org.reflections.Reflections;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.AddressResolverOptionsConfigurator;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.dns.AddressResolverOptions;
 
@@ -14,7 +14,7 @@ import io.vertx.core.dns.AddressResolverOptions;
 public class AddressResolverOptionsProvider extends AbstractOptionsProvider<AddressResolverOptions> {
 
     @Inject
-    public AddressResolverOptionsProvider(Injector injector, Reflections reflections) {
+    public AddressResolverOptionsProvider(CoreInjector injector, Reflections reflections) {
         super(injector, reflections, AddressResolverOptionsConfigurator.class, "AddressResolver");
     }
 

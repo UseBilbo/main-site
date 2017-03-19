@@ -6,10 +6,10 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.Order;
 import com.usebilbo.vertx.annotation.RouterConfiguration;
 import com.usebilbo.vertx.annotation.RoutingOrder;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.Vertx;
 
@@ -19,7 +19,7 @@ import io.vertx.core.Vertx;
 public class BeforeBodyParsedRestConfigurator extends AbstractRestConfigurator {
 
     @Inject
-    public BeforeBodyParsedRestConfigurator(Injector injector, Provider<Vertx> vertx, List<RestBean> beans) {
+    public BeforeBodyParsedRestConfigurator(CoreInjector injector, Provider<Vertx> vertx, List<RestBean> beans) {
         super(injector, vertx, beans, (b) -> b.isBeforeBodyParsed(), "unparsed body");
     }
 }

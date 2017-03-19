@@ -1,5 +1,7 @@
 package com.usebilbo.vertx.cluster.api.impl;
 
+import static com.usebilbo.vertx.util.Utils.coalesce;
+
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -26,11 +28,11 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
     private final LazyReference<IgniteCache<K, V>> cache;
     private final LazyReference<IgniteAtomicSequence> sequence;
     private final SimpleConverter<K> converter;
-    
+
     private static interface SimpleConverter<K> {
         K convert(long source);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Inject
     public CoreDaoImpl(TypeLiteral<K> key, TypeLiteral<V> val, LazyReferenceFactory factory, Schema schema) {
@@ -39,7 +41,7 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
         this.config = schema.config(valueType);
         this.cache = factory.cache(config.cacheName());
         this.sequence = factory.sequence(config.cacheName() + SUFFIX);
-        
+
         if (keyType.isAssignableFrom(String.class)) {
             this.converter = (src) -> (K) Long.toHexString(src);
         } else if (keyType.isAssignableFrom(Long.class)) {
@@ -57,9 +59,9 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
     @SuppressWarnings("unchecked")
     @Override
     public SqlQuery<K, V> newQuery(String sql, Object... args) {
-            return (SqlQuery<K, V>) new SqlQuery<>(valueType, sql).setArgs(args);
+        return (SqlQuery<K, V>) new SqlQuery<>(valueType, sql).setArgs(args);
     }
-    
+
     @Override
     public PersistentConfig config() {
         return config;
@@ -67,47 +69,63 @@ public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
 
     @Override
     public Optional<V> persist(V value) {
-        K key = config.key().orNull(value);
-        
+        K key = key(value);
+
         if (key == null) {
             do {
-                key = generateKey();
-                config.key().set(value, key);
-                
-            } while(cache.get().putIfAbsent(key, value));
-            
-            return storeNew(value);
+                key = key(value, generateKey());
+            } while (!cache().putIfAbsent(key, value));
         } else {
-            cache.get().put(key, value);
-            return Optional.of(value);
+            cache().put(key, value);
         }
+        return Optional.of(value);
+    }
+
+    private K key(V value) {
+        return config.key().orNull(value);
+    }
+
+    private K key(V value, K key) {
+        try {
+            config.key().set(key, value);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new CorePersistenceException(
+                    "Exception while setting key to value of type " + valueType.getSimpleName(), e);
+        }
+        return key;
     }
 
     private K generateKey() {
         return converter.convert(sequence.get().incrementAndGet());
     }
 
-    private Optional<V> storeNew(V value) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     @Override
     public Optional<V> remove(K key, V value) {
-        // TODO Auto-generated method stub
-        return null;
+        K keyToRemove = coalesce(() -> key, () -> key(value));
+
+        if (keyToRemove == null) {
+            return Optional.empty();
+        }
+
+        cache().remove(keyToRemove);
+
+        return Optional.ofNullable(value);
     }
 
     @Override
-    public Optional<V> getOrNew(K key, com.usebilbo.vertx.cluster.api.CoreDao.OnNew<K, V> factory) {
-        // TODO Auto-generated method stub
-        return null;
+    public Optional<V> getOrNew(K key, OnNew<K, V> factory) {
+        if (key == null) {
+            if (factory == null) {
+                return Optional.empty();
+            }
+            return persist(factory.create(null));
+        }
+
+        return Optional.ofNullable(cache().getAndPutIfAbsent(key, factory.create(key)));
     }
 
     @Override
     public <R> QueryCursor<R> query(Query<R> query) {
-        // TODO Auto-generated method stub
-        return null;
+        return cache().query(query);
     }
-
 }

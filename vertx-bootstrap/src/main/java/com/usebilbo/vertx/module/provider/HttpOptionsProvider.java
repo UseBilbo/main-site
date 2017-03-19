@@ -5,15 +5,15 @@ import javax.inject.Singleton;
 
 import org.reflections.Reflections;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.HttpOptionConfiguration;
+import com.usebilbo.vertx.module.CoreInjector;
 
 import io.vertx.core.http.HttpServerOptions;
 
 @Singleton
 public class HttpOptionsProvider extends AbstractOptionsProvider<HttpServerOptions> {
     @Inject
-    public HttpOptionsProvider(Injector injector, Reflections reflections) {
+    public HttpOptionsProvider(CoreInjector injector, Reflections reflections) {
         super(injector, reflections, HttpOptionConfiguration.class, "HTTP Server");
     }
 

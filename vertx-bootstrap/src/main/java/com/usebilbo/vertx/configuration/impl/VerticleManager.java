@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 
 import org.reflections.Reflections;
 
-import com.google.inject.Injector;
 import com.usebilbo.vertx.annotation.AppVerticle;
 import com.usebilbo.vertx.annotation.Options;
 
@@ -24,7 +23,7 @@ public class VerticleManager extends AbstractVerticle {
     private final Vertx vertx;
 
     @Inject
-    public VerticleManager(Reflections reflections, Vertx vertx, Injector injector) {
+    public VerticleManager(Reflections reflections, Vertx vertx) {
         this.vertx = vertx;
         this.list = reflections.getTypesAnnotatedWith(AppVerticle.class);
     }

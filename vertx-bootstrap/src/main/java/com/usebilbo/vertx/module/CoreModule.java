@@ -7,6 +7,7 @@ import org.reflections.Reflections;
 import com.google.inject.AbstractModule;
 import com.usebilbo.vertx.annotation.UTC;
 import com.usebilbo.vertx.configuration.CommandLine;
+import com.usebilbo.vertx.module.impl.GuiceCoreInjector;
 import com.usebilbo.vertx.util.ClockService;
 import com.usebilbo.vertx.util.impl.UtcClockService;
 
@@ -24,6 +25,7 @@ public class CoreModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(CoreInjector.class).to(GuiceCoreInjector.class);
         bind(Reflections.class).toInstance(reflections);
         bind(CommandLine.class).toInstance(commandLine);
         bind(Clock.class).annotatedWith(UTC.class).toInstance(Clock.systemUTC());
