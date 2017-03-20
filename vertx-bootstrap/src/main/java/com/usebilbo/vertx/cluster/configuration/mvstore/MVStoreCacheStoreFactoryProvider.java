@@ -43,18 +43,7 @@ public class MVStoreCacheStoreFactoryProvider implements CacheStoreFactoryProvid
         String storageFile = ListUtils.last(storage.list());
         LOG.info("Opening persistent storage at {}", storageFile);
         
-//        HashMap<String, Object> config = new HashMap<>();
-//        config.put("compress", true);
-//        config.put("fileName", storageFile);
-//        config.put("autoCommitDelay", 100);
-
-        MVStore.Builder builder = new MVStore.Builder();
-        store = builder.compressHigh().fileName(storageFile).open();
-//        
-//        
-//        store = MVStore.open(storageFile);
-//        .
-        
+        store = new MVStore.Builder().compressHigh().fileName(storageFile).open();
         service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(() -> compact(), compactionInterval, compactionInterval, TimeUnit.MILLISECONDS);
     }

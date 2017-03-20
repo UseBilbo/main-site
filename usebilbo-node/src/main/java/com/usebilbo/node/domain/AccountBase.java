@@ -18,6 +18,9 @@ public class AccountBase implements Serializable {
     private String email;
     private String password;
     
+    private boolean registered = false;
+    private long timestamp;
+    
     public static AccountBase of(String email) {
         return new AccountBase().setEmail(email);
     }
@@ -46,6 +49,24 @@ public class AccountBase implements Serializable {
 
     public AccountBase setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public AccountBase setRegistered(boolean registered) {
+        this.registered = registered;
+        return this;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public AccountBase setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
         return this;
     }
 }

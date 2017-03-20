@@ -80,7 +80,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     }
 
     private void logWrite(Entry<? extends K, ? extends V> entry) {
-        LOG.info("Writing {}->{} to {}", entry.getKey(), entry.getValue(), map.getName());
+        //LOG.info("Writing {}->{} to {}", entry.getKey(), entry.getValue(), map.getName());
     }
 
     @Override
