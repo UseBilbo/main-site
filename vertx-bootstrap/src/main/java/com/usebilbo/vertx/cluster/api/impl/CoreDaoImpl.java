@@ -22,7 +22,8 @@ import com.usebilbo.vertx.cluster.api.Schema;
 import com.usebilbo.vertx.exception.CorePersistenceException;
 
 public class CoreDaoImpl<K, V> implements CoreDao<K, V> {
-    private static final String SUFFIX = "-sequence";
+    public static final String SUFFIX = "-sequence";
+    
     private final Class<K> keyType;
     private final Class<V> valueType;
     private final PersistentConfig config;

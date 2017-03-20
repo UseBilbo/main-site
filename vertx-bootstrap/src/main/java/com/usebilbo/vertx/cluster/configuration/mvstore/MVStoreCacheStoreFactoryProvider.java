@@ -1,6 +1,5 @@
 package com.usebilbo.vertx.cluster.configuration.mvstore;
 
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -26,13 +25,11 @@ public class MVStoreCacheStoreFactoryProvider implements CacheStoreFactoryProvid
 
     private static final Logger LOG = LogManager.getLogger();
 
-    
     private final MVStore store;
     private final ScheduledExecutorService service;
     private final int fillRate;
     private final int writeSize;
     private final long compactionInterval;
-
 
     @Inject
     public MVStoreCacheStoreFactoryProvider(@Named("vertx.cluster.storage.path") PropertyContainer storage,
@@ -46,12 +43,18 @@ public class MVStoreCacheStoreFactoryProvider implements CacheStoreFactoryProvid
         String storageFile = ListUtils.last(storage.list());
         LOG.info("Opening persistent storage at {}", storageFile);
         
-        HashMap<String, Object> config = new HashMap<>();
-        config.put("compress", true);
-        config.put("fileName", storageFile);
-        config.put("autoCommitDelay", 100);
+//        HashMap<String, Object> config = new HashMap<>();
+//        config.put("compress", true);
+//        config.put("fileName", storageFile);
+//        config.put("autoCommitDelay", 100);
+
+        MVStore.Builder builder = new MVStore.Builder();
+        store = builder.compressHigh().fileName(storageFile).open();
+//        
+//        
+//        store = MVStore.open(storageFile);
+//        .
         
-        store = MVStore.open(storageFile);
         service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(() -> compact(), compactionInterval, compactionInterval, TimeUnit.MILLISECONDS);
     }

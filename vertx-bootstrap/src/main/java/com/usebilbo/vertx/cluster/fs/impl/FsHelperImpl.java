@@ -31,7 +31,7 @@ import com.usebilbo.vertx.util.Utils;
 public class FsHelperImpl implements FsHelper {
     private static final Logger LOG = LogManager.getLogger();
     
-    private static final String FILE_NAME_SEQUENCE = "fs-helper.sequence";
+    public static final String FILE_NAME_SEQUENCE = "fs-helper.sequence";
 
     private final LazyReferenceFactory factory;
     private final LazyReference<IgniteAtomicSequence> sequence;

@@ -1,9 +1,13 @@
 package com.usebilbo.vertx.cluster.api;
 
 public enum ClusterFileSystem {
-    PUBLIC("public"),
-    PRIVATE("private"),
-    TEMP("temp");
+//    PUBLIC("public"),
+//    PRIVATE("private"),
+//    TEMP("temp");
+    ;
+    public static final String NAME_PREFIX = "fs-";
+    public static final String META_SUFFIX = "-meta";
+    public static final String DATA_SUFFIX = "-data";
     
     private final String label;
     private final String dataName;
@@ -23,7 +27,7 @@ public enum ClusterFileSystem {
     
     private ClusterFileSystem(String label) {
         this.label = label;
-        this.dataName = "fs-" + label + "-data";
-        this.metaName = "fs-" + label + "-meta";
+        this.dataName = NAME_PREFIX + label + DATA_SUFFIX;
+        this.metaName = NAME_PREFIX + label + META_SUFFIX;
     }
 }

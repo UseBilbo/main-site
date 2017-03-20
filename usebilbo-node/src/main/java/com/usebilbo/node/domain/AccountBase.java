@@ -1,12 +1,16 @@
 package com.usebilbo.node.domain;
 
+import java.io.Serializable;
+
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import com.usebilbo.vertx.annotation.ID;
 import com.usebilbo.vertx.annotation.Persistent;
 
 @Persistent
-public class AccountBase {
+public class AccountBase implements Serializable {
+    private static final long serialVersionUID = -1361872413575267945L;
+
     @ID
     private Long id;
 

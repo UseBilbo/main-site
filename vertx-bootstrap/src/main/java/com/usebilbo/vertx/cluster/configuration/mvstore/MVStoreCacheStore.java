@@ -28,9 +28,12 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     private final MVMap<K, V> map;
     private final ReadWriteLock lock = new ReentrantReadWriteLock(false);
     private final String name;
+    private final MVStore store;
 
+    //TODO: check and fix concurrent access
     public MVStoreCacheStore(String name, MVStore store, Class<K> keyType, Class<V> valueType) {
         this.name = name;
+        this.store = store;
         Builder<K, V> builder = new MVMap.Builder<>();
         if (keyType == String.class) {
             builder.keyType(new StringDataType());
@@ -40,7 +43,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
 
         this.map = store.openMap(name, builder);
 
-        LOG.info("Map {} is opened", name);
+        LOG.info("Persistent storage for map {} is opened", name);
     }
 
     @Override
@@ -64,6 +67,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
         try (Locker locker = Locker.forWrite(lock)) {
             logWrite(entry);
             map.put(entry.getKey(), entry.getValue());
+            store.commit();
         }
     }
 
@@ -71,6 +75,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     public void writeAll(Collection<Entry<? extends K, ? extends V>> entries) throws CacheWriterException {
         try (Locker locker = Locker.forWrite(lock)) {
             entries.stream().peek(this::logWrite).forEach(e -> map.put(e.getKey(), e.getValue()));
+            store.commit();
         }
     }
 
@@ -82,6 +87,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     public void delete(Object key) throws CacheWriterException {
         try (Locker locker = Locker.forWrite(lock)) {
             map.remove(key);
+            store.commit();
         }
     }
 
@@ -89,6 +95,7 @@ public class MVStoreCacheStore<K, V> implements CacheStore<K, V> {
     public void deleteAll(Collection<?> keys) throws CacheWriterException {
         try (Locker locker = Locker.forWrite(lock)) {
             keys.stream().forEach(k -> map.remove(k));
+            store.commit();
         }
     }
 
