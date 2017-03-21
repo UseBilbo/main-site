@@ -14,11 +14,11 @@ import com.usebilbo.vertx.util.TypeUtils;
 import io.vertx.ext.web.Router;
 
 @SystemModule
-public class CoreSystemModule extends AbstractModule {
+public class PersistenceModule extends AbstractModule {
     private final List<PersistentConfig> persistentConfigs;
 
     @Inject
-    public CoreSystemModule(List<PersistentConfig> persistentConfigs) {
+    public PersistenceModule(List<PersistentConfig> persistentConfigs) {
         this.persistentConfigs = persistentConfigs;
     }
 

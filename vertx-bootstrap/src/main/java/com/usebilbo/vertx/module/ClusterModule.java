@@ -10,6 +10,7 @@ import org.apache.ignite.configuration.IgniteConfiguration;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.usebilbo.vertx.annotation.ClusterManagerQueue;
+import com.usebilbo.vertx.annotation.JWT;
 import com.usebilbo.vertx.cluster.api.BeanParser;
 import com.usebilbo.vertx.cluster.api.PersistentConfig;
 import com.usebilbo.vertx.cluster.api.impl.PersistenceBeanParserImpl;
@@ -21,6 +22,7 @@ import com.usebilbo.vertx.module.provider.EventBusOptionsProvider;
 import com.usebilbo.vertx.module.provider.HttpOptionsProvider;
 import com.usebilbo.vertx.module.provider.IgniteConfigurationProvider;
 import com.usebilbo.vertx.module.provider.IgniteProvider;
+import com.usebilbo.vertx.module.provider.JwtConfigProvider;
 import com.usebilbo.vertx.module.provider.MetricsOptionsProvider;
 import com.usebilbo.vertx.module.provider.PersistenceConfigProvider;
 import com.usebilbo.vertx.module.provider.RestBeansProvider;
@@ -32,6 +34,7 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.dns.AddressResolverOptions;
 import io.vertx.core.eventbus.EventBusOptions;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.metrics.MetricsOptions;
 import io.vertx.core.spi.cluster.ClusterManager;
 
@@ -47,6 +50,7 @@ public class ClusterModule extends AbstractModule {
         bind(EventBusOptions.class).toProvider(EventBusOptionsProvider.class);
         
         bind(new TypeLiteral<List<PersistentConfig>>(){}).toProvider(PersistenceConfigProvider.class);
+        bind(JsonObject.class).annotatedWith(JWT.class).toProvider(JwtConfigProvider.class);
         bind(new TypeLiteral<List<CacheConfiguration<?, ?>>>(){}).toProvider(CacheConfigurationProvider.class);
         bind(new TypeLiteral<List<RestBean>>(){}).toProvider(RestBeansProvider.class);
         bind(IgniteConfiguration.class).toProvider(IgniteConfigurationProvider.class);
