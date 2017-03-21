@@ -29,10 +29,10 @@ function computeErrorText() {
   }
   debugger;
   switch(params.err) {
-    case "1": return "Valid email is required!";
-    case "2": return "Provided email already registered in the UseBilbo!";
-    case "3": return "Error while trying to register email.";
-    default: return "Unknown error";
+    case "1": return "Wpisz poprawny adres email!";
+    case "2": return "Ten adres email jest już zarejestrowany w Bilbo!";
+    case "3": return "Problem podczas rejestracji adresu email!";
+    default: return "Nieznany problem!";
   }
 }
 

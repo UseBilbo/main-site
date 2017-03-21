@@ -86,7 +86,7 @@ const ThankYouPage = () => (
         <br />
         <a href="https://www.facebook.com/groups/400811693627030/" target="_blank"><img style={imgStyle} src='image/fb-logo-blue-50.png' alt='FB Logo'/></a>
       </div>
-    <LandingFooter />
+    <LandingFooter useIcon={false} />
   </div>
 );
 
