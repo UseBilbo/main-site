@@ -70,7 +70,7 @@ class LandingPage extends Component {
         <Invitation />
         <Comments />
         <RegisterForm />
-        <LandingFooter />
+        <LandingFooter  useIcon={true} />
         <Dialog
               actions={actions}
               modal={false}

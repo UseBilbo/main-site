@@ -11,7 +11,7 @@ const tyLeftPicStyle = {
   backgroundPosition: 'right 0px',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100% auto',
-  height: '650px',
+  height: '600px',
   textAlign: 'center',
   fontSize:'44px',
   lineHeight: '1.5em',
@@ -20,7 +20,7 @@ const tyLeftPicStyle = {
 }
 const tyRightPanelStyle = {
   width: '50%',
-  padding: '40px',
+  padding: '80px',
 }
 
 const imgStyle = {
@@ -51,11 +51,10 @@ const ThankYouPage = () => (
             ZNAJOMYCH DO BILBO
             </div>
             <br />
-            <div style={{textAlign: 'center'}}>
+            <div style={{textAlign: 'center', margin: '20px'}}>
             Bilbo to inicjatywa, która działa wtedy, gdy są w niej Twoi znajomi. Jeżeli myślisz, że pomysł Bilbo
             mógłby się im spodobać, nie zachowuj tej wiedzy tylko dla siebie. Podziel się ze znajomymi! :)
             </div>
-            <br />
             <br />
             <div style={{width: '100%', backgroundColor: 'white', textAlign: 'center', fontSize: '20px', fontWeight: 500, lineHeight: '2em'}}>
               {`${window.location}`}
@@ -66,8 +65,8 @@ const ThankYouPage = () => (
               <span>
                 <a target='_blank' href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location)}`}>
                   <img src="image/fb-logo-blue-50.png" alt="Facebook" />
-                </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="image/bar.png" alt="Bar"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="image/bar.png" alt="Bar"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a target='_blank' href={`https://twitter.com/home?status=Just%20joined%20UseBilbo%20${encodeURIComponent(window.location)}`}>
                   <img src="image/twitter-logo-blue-50.png" alt="Twitter" />
                   </a>

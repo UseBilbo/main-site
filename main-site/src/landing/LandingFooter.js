@@ -36,11 +36,14 @@ const heartStyle = {
   color: '#6e323d',
 }
 
-const LandingFooter = () => (
+const LandingFooter = (props) => (
   <div style={mainStyle}>
     <div style={leftStyle}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Made with &nbsp;<span style={heartStyle}>❤</span>&nbsp; in Krakow.</div>
     <div style={rightStyle}>Copyrights © 2017. usebilbo.com . All rights reserved.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="https://www.facebook.com/groups/400811693627030/" target="_blank"><img style={imgStyle} src='image/fb-logo-blue-50.png' alt='FB Logo'/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      { (props.useIcon) ?
+          <span><a href="https://www.facebook.com/groups/400811693627030/" target="_blank"><img style={imgStyle} src='image/fb-logo-blue-50.png' alt='FB Logo'/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+          : <span></span>
+      }
     </div>
   </div>
 )
