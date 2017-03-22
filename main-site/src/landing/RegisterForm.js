@@ -36,7 +36,7 @@ const RegisterForm = (props) => (
         Zapisz się teraz, a jak tylko wystartujemy, to dostaniesz od nas w nim coś fajnego - niespodziankę :)
         <br />
       </div>
-      <form style={formStyle}>
+      <form style={formStyle} id="form1" action="/api/register" method="POST">
         <div style={{border:'2px', backgroundColor: 'rgba(126,217,227,0.1)', padding: '20px 50px 30px 50px'}}>
           <br />
           <TextField hintText="jestes.cudowna.osoba@gmail.com" name="email" type="email"
