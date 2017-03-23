@@ -19,7 +19,6 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpVersion;
 
 @HttpOptionConfiguration
-//TODO: add missing properties from NetworkOptions and TCPSSLOptions 
 public class HttpOptionsConfigurator implements Configurator<HttpServerOptions> {
     private static final Logger LOG = LogManager.getLogger();
 
