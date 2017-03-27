@@ -15,3 +15,4 @@ echo "Assembling binaries version $bin_version with ALPN version $alpn_version"
 cp ~/.m2/repository/org/mortbay/jetty/alpn/alpn-boot/$alpn_version/alpn-boot-$alpn_version.jar ./misc/
 
 zip -9r bundle-$bin_version.zip usebilbo-node/target/usebilbo*-fat.jar ./misc/* $site_dir/* *.sh *.version
+mv bundle-$bin_version.zip ../usebilbo-releases/bundle-$bin_version.package
