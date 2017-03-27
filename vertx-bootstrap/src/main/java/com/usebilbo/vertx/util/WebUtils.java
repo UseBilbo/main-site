@@ -13,8 +13,6 @@ public final class WebUtils {
     }
     
     public static void sendRedirect(HttpServerResponse response, String destination) {
-        response.setStatusCode(HttpResponseStatus.FOUND.code());
-        response.putHeader(HttpHeaders.LOCATION.toString(), destination);
-        response.end();
+        response.setStatusCode(HttpResponseStatus.FOUND.code()).putHeader(HttpHeaders.LOCATION.toString(), destination).end();
     }
 }
