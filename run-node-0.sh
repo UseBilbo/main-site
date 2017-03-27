@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar usebilbo-node/target/usebilbo-node-0.0.1-fat.jar "$@"
+./run-node.sh -c misc/node0.boot.conf
